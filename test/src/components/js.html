@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="button" value="全选" onclick="allSelect('all')">
+    <input type="button" value="取消" id="btn2" onclick="allSelect('con')">
+    <input type="button" value="反选" onclick="allSelect('re')">
+    <table id="myTable" border="1">
+        <tr>
+            <td><input type="checkbox" name="" id=""></td>
+            <td>
+                123
+            </td>
+            <td>
+                123
+            </td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" name="" id=""></td>
+            <td>
+                123
+            </td>
+            <td>
+                123
+            </td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" name="" id=""></td>
+            <td>
+                123
+            </td>
+            <td>
+                123
+            </td>
+        </tr>
+    </table>
+    <select name="pri" id="pri"></select>
+    <select name="city" id="city"></select>
+    <div class="codeBox">
+        <span class="code" id="checkCode"></span>
+        <span id="changeCode" onclick="changeCode()" style="color:blue">换一张</span>
+    </div>
+    <div id="Time"><span id="cal_time"></span></div>
+    <script>
+        function allSelect(choose) {
+
+            var aa = document.getElementById('myTable')
+            var bb = document.getElementsByTagName('input')
+            if (choose == 'all') {
+
+                for (let index = 0; index < bb.length; index++) {
+                    bbb = bb[index]
+                    bbb.checked = true
+                }
+            } else if (choose == 'con') {
+                for (let index = 0; index < bb.length; index++) {
+                    bbb = bb[index]
+                    bbb.checked = false
+                }
+            } else if (choose == 're') {
+                for (let index = 0; index < bb.length; index++) {
+                    bbb = bb[index]
+                    if (bbb.checked == true) {
+                        bbb.checked = false;
+                    }
+                    else {
+                        bbb.checked = true;
+                    }
+
+                }
+            }
+
+        }
+        data = { "请选择省": ["请选择市"], "湖南省": ["长沙", "益阳", "常德", "湘潭", "宁乡"], "珠海": ["香洲区", "金湾区", "斗门区"] };
+        console.log(data['请选择省']);
+        var pri = document.getElementById('pri');
+        var city = document.getElementById('city');
+        for (var i in data) {
+            var kk = document.createElement('option');
+            kk.innerHTML = i;
+            pri.appendChild(kk)
+        }
+        pri.onchange = function () {
+            index = pri.selectedIndex;
+            var text = pri.options[index].innerHTML;
+            citys = data[text];
+            console.log(citys);
+            for (var i in citys) {
+                var kkk = document.createElement('option');
+                kkk.innerHTML = citys[i];
+                city.appendChild(kkk)
+            }
+
+        }
+        // 面试
+        for (var i = 0; i < 10; i++) {
+            setTimeout(() => {
+                console.log(i);
+            }, 0)
+        }
+        //倒计时
+        setInterval(() => {
+            Time();
+        }, 1000);
+        //window.onload =Time();
+        function Time() {
+            var endTime = new Date(2019, 11, 12);
+            //endTime.setMonth(11,12)
+            endTime.setHours(0, 0, 0, 1);
+            var startTime = new Date();
+            var getTime = endTime.getTime() - startTime.getTime();
+            // console.log("star",endTime-startTime);
+            // console.log(endTime.getTime()-startTime.getTime());
+            var day = parseInt(getTime / 1000 / 60 / 60 / 24);
+            var hours = parseInt(((getTime / 1000 / 60 / 60 / 24) - day) * 24);
+            var minutes = parseInt((((getTime / 1000 / 60 / 60 / 24) - day) * 24 - hours) * 60)
+            var seconds = parseInt(((((getTime / 1000 / 60 / 60 / 24) - day) * 24 - hours) * 60 - minutes) * 60)
+            document.getElementById('cal_time').innerText=day + "天" + hours + "小时" + minutes + "分钟" + seconds + "秒"
+        }
+
+        //模拟验证码
+        function changeCode() {
+            var addChap = "";
+            var check_code = document.getElementById('checkCode')
+            var chap = new Array('1', '2', '3', '4', '5', '6', 'a', 'b', 'c', 'd', 'e', 'p')
+            for (i = 0; i < 4; i++) {
+                var mathRandom = Math.floor(Math.random() * 10);
+                // console.log(chap[mathRandom]);
+                addChap += chap[mathRandom];
+            }
+            check_code.innerHTML = addChap;
+        }
+        window.onload = function () {
+            changeCode();
+        }
+
+
+
+    </script>
+</body>
+<style>
+    #content {
+        width: 200px;
+        height: 200px;
+        background-color: rgb(102, 61, 61);
+    }
+
+    select {
+        width: 150px;
+    }
+
+    #checkCode {
+        display: inline-block;
+        background-color: rgb(165, 160, 160);
+        width: 93px;
+        height: 40px;
+        font-size: 30px;
+        font-style: italic;
+        text-align: center;
+    }
+</style>
+
+</html>
