@@ -48,6 +48,26 @@
         <span id="changeCode" onclick="changeCode()" style="color:blue">换一张</span>
     </div>
     <div id="Time"><span id="cal_time"></span></div>
+    <div id="getArribute">
+        <ul>
+            <li title="a"></li>
+            <li title="2b"></li>
+            <li title="3c"></li>
+            <li title></li>
+            <li title="5t"></li>
+        </ul>
+    </div>
+    <div id="imgTest">
+        <ul>
+            <li><a href="../assets/img/3.jpg" onclick="showPic(this); return false" title="photo1">photo1</a></li>
+            <li><a href="../assets/img/4.jpeg" onclick="showPic(this); return false" title="photo2">photo2</a></li>
+            <li><a href="../assets/img/3.jpg" onclick="showPic(this); return false" title="photo3">photo3</a></li>
+            <li><a href="../assets/img/3.jpg" onclick="showPic(this); return false" title="photo4">photo4</a></li>
+            <li><img src="../assets/img/1.jpg" alt="myimage" id="placehoder">
+            <p id="descript">choose your picture</p>
+            </li>
+        </ul>
+    </div>
     <script>
         function allSelect(choose) {
 
@@ -122,7 +142,8 @@
             var hours = parseInt(((getTime / 1000 / 60 / 60 / 24) - day) * 24);
             var minutes = parseInt((((getTime / 1000 / 60 / 60 / 24) - day) * 24 - hours) * 60)
             var seconds = parseInt(((((getTime / 1000 / 60 / 60 / 24) - day) * 24 - hours) * 60 - minutes) * 60)
-            document.getElementById('cal_time').innerText=day + "天" + hours + "小时" + minutes + "分钟" + seconds + "秒"
+            document.getElementById('cal_time').innerText = day + "天" + hours + "小时" + minutes + "分钟" + seconds + "秒"
+            console.log("判断document.getElementById返回类型", typeof (document.getElementById('cal_time')));
         }
 
         //模拟验证码
@@ -140,8 +161,43 @@
         window.onload = function () {
             changeCode();
         }
+        //do-while
+        var count = 1;
+        do {
+            count++;
+        } while (count < 1);
+        //alert(count)
+        //数组
+        var myArray = new Array('123', '345')
+        for (var i = 0; i < myArray.length; i++) {
+            console.log(myArray[i]);;
+        }
+        //math.round
+        console.log("math.round", Math.round(6.66));
+        //getAttribute
+        var getLi = document.getElementsByTagName('li');
 
-
+        for (var i = 0; i < getLi.length; i++) {
+            var getP = getLi[i].getAttribute('title');
+            if (getP) {
+                console.log("getAttribute", getLi[i].getAttribute('title'));
+            } else {
+                getLi[i].setAttribute("title", "qweqweqwe")
+            }
+            // console.log("getAttribute",getLi[i].getAttribute('title'));
+        }
+        //改变图片
+       function showPic(de){
+        var descript =document.getElementById('descript')
+        var placeImage = document.getElementById('placehoder');
+        var kk =de.getAttribute("href");
+        var getTitle =de.getAttribute('title')
+        descript.innerText=getTitle;
+        placeImage.setAttribute("src",kk);
+       }
+       //childNodes
+       var body_element=document.getElementsByTagName('body')[0];
+       console.log("body_element",body_element.nodeType);
 
     </script>
 </body>
