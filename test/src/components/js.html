@@ -64,9 +64,13 @@
             <li><a href="../assets/img/3.jpg" onclick="showPic(this); return false" title="photo3">photo3</a></li>
             <li><a href="../assets/img/3.jpg" onclick="showPic(this); return false" title="photo4">photo4</a></li>
             <li><img src="../assets/img/1.jpg" alt="myimage" id="placehoder">
-            <p id="descript">choose your picture</p>
+                <p id="descript">choose your picture</p>
             </li>
         </ul>
+    </div>
+    <input type="button" value="打开新窗口" id="newWindow">
+    <div id="testdiv">
+
     </div>
     <script>
         function allSelect(choose) {
@@ -143,7 +147,7 @@
             var minutes = parseInt((((getTime / 1000 / 60 / 60 / 24) - day) * 24 - hours) * 60)
             var seconds = parseInt(((((getTime / 1000 / 60 / 60 / 24) - day) * 24 - hours) * 60 - minutes) * 60)
             document.getElementById('cal_time').innerText = day + "天" + hours + "小时" + minutes + "分钟" + seconds + "秒"
-            console.log("判断document.getElementById返回类型", typeof (document.getElementById('cal_time')));
+            // console.log("判断document.getElementById返回类型", typeof (document.getElementById('cal_time')));
         }
 
         //模拟验证码
@@ -158,9 +162,9 @@
             }
             check_code.innerHTML = addChap;
         }
-        window.onload = function () {
-            changeCode();
-        }
+        // window.onload = function () {
+        //     changeCode();
+        // }
         //do-while
         var count = 1;
         do {
@@ -187,18 +191,66 @@
             // console.log("getAttribute",getLi[i].getAttribute('title'));
         }
         //改变图片
-       function showPic(de){
-        var descript =document.getElementById('descript')
-        var placeImage = document.getElementById('placehoder');
-        var kk =de.getAttribute("href");
-        var getTitle =de.getAttribute('title')
-        descript.innerText=getTitle;
-        placeImage.setAttribute("src",kk);
-       }
-       //childNodes
-       var body_element=document.getElementsByTagName('body')[0];
-       console.log("body_element",body_element.nodeType);
-       //test
+        function showPic(de) {
+            var descript = document.getElementById('descript')
+            var placeImage = document.getElementById('placehoder');
+            var kk = de.getAttribute("href");
+            var getTitle = de.getAttribute('title')
+            descript.innerText = getTitle;
+            placeImage.setAttribute("src", kk);
+        }
+        //childNodes
+        var body_element = document.getElementsByTagName('body')[0];
+        console.log("body_element", body_element.nodeType);
+        //test open new window
+        var newWindow = document.getElementById('newWindow');
+        newWindow.onclick = function () {
+            window.open('http://www.jianshu.com', '百度test');
+            console.log('object');
+        }
+        //js分离
+        function chengeFont() {
+            var imgTest = document.getElementById('imgTest');
+            var imgTest_a = imgTest.getElementsByTagName('a');
+
+            for (var i = 0; i < imgTest_a.length; i++) {
+                imgTest_a[i].onmouseover = function () {
+                    //console.log(this);
+                    this.setAttribute('style', "color:red");
+                }
+                imgTest_a[i].onmouseout = function () {
+                   // console.log(this);
+                    this.setAttribute('style', "color:blue");
+                }
+            }
+
+
+        }
+        window.onload = function () {
+            chengeFont();
+        };
+        //document.write
+        document.write('<h1>这一段是写入的</h1>');
+        //creatElement
+        var testdiv = document.getElementById('testdiv');
+        var para = document.createElement('h2');
+        para.innerText='creatElement和appendChild新增节点';
+        para.style.color='blue';
+        para.setAttribute('id','para');
+        testdiv.appendChild(para);
+        //insertBefore
+        var newElement = document.createElement('h2');
+        newElement.innerText='新建节点在para之前----createElement';
+        testdiv.insertBefore(newElement,para);
+        //自定义insertAfter函数
+        function insertAfter(newElement,targetElement){
+            var parent =targetElement.parentNode;
+            if(parent.lastChild==targetElement){
+                parent.appendChild(newElement);
+            }else{
+                parent.insertBefore(newElement,targetElement.nextSibling)
+            }
+        }
     </script>
 </body>
 <style>
