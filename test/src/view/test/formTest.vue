@@ -1,16 +1,8 @@
 <template>
   <div>
-    <i class="el-icon-edit"></i>
-    <el-form class="form_warp" :model="formModel" :rules="rules" ref="ruleForm">
-      <el-form-item label="活动名称" prop="name">
-        <el-input v-model="formModel.name"></el-input>
-      </el-form-item>
-
-      <el-form-item>
-        <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
-        <el-button @click="resetForm('ruleForm')">重置</el-button>
-      </el-form-item>
-    </el-form>
+    <div class="searchBox">
+      123
+    </div>
   </div>
 </template>
 <script>
@@ -48,3 +40,12 @@ export default {
   }
 };
 </script>
+<style lang="">
+.searchBox {
+
+  height: 62px;
+  width: 100%;
+  padding: 20px 20px 0 20px;
+  background-color: rgb(124, 42, 42);
+}
+</style>

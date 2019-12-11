@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import login from '@/components/login'
-import container from  '@/view/container'
-import formTest from '@/view/formTest'
+import container from '@/view/container'
+import formTest from '@/view/test/formTest'
 import css_test from '@/components/css_test'
- 
+
 Vue.use(Router)
 
 export default new Router({
@@ -17,7 +17,14 @@ export default new Router({
     {
       path: '/main',
       name: 'container',
-      component: container
+      component: container,
+      children: [
+        {
+          path: '/form',
+          name: 'formTest',
+          component: formTest
+        }
+      ]
     },
     {
       path: '/form',
@@ -29,6 +36,6 @@ export default new Router({
       name: 'css_test',
       component: css_test
     },
-    
+
   ]
 })

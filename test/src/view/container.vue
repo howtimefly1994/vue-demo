@@ -13,7 +13,9 @@
               <i class="el-icon-s-fold" @click="collapseSide()" v-show="!$store.state.collapse"></i>
             </div>
           </div>
-          <el-main></el-main>
+          <el-main>
+             <router-view />
+          </el-main>
           <el-footer>Footer</el-footer>
         </el-container>
       </el-container>

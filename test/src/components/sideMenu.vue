@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-menu
-      default-active="2"
+      default-active="$route.path"
       class="el-menu-vertical-demo"
       @open="handleOpen"
       @close="handleClose"
@@ -9,6 +9,7 @@
       text-color="#fff"
       active-text-color="#ffd04b"
       :collapse=$store.state.collapse
+      router
     >
       <el-submenu index="1">
         <template slot="title">
@@ -18,11 +19,11 @@
         <el-menu-item index="1-1">选项1</el-menu-item>
         <el-menu-item index="1-2">选项2</el-menu-item>
       </el-submenu>
-      <el-menu-item index="2">
+      <el-menu-item index="/form">
         <i class="el-icon-menu"></i>
         <span slot="title">导航二</span>
       </el-menu-item>
-      <el-menu-item index="3">
+      <el-menu-item index="/form">
         <i class="el-icon-document"></i>
         <span slot="title">导航三</span>
       </el-menu-item>

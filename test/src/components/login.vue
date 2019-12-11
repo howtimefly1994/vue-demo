@@ -38,8 +38,8 @@ export default {
   data() {
     return {
       verifyLoadState: "",
-      verifiy: "http://localhost:3000/captcha",
-      //  verifiy:'http://49.235.129.13:3000/captcha',
+      // verifiy: "http://localhost:3000/captcha",
+       verifiy:'http://49.235.129.13:3000/captcha',
       formModel: {
         name: "czm",
         pas: "qwe",
@@ -81,7 +81,7 @@ export default {
         verifiy: this.formModel.verifiy
       };
       this.$http.user.loginUser(params).then(res => {
-        if (res.data.result.code == -1) {
+        if (res.data.result.code == 200) {
           this.$message({
             message: "登陆成功",
             type: "success"
