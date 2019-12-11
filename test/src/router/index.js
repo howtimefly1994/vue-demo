@@ -1,23 +1,23 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/login'
-import tableTest from  '@/view/tableTest'
+import login from '@/components/login'
+import container from  '@/view/container'
 import formTest from '@/view/formTest'
 import css_test from '@/components/css_test'
- import jsTest from '@/components/jsTest'
+ 
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      name: 'login',
+      component: login
     },
     {
-      path: '/table',
-      name: 'tableTest',
-      component: tableTest
+      path: '/main',
+      name: 'container',
+      component: container
     },
     {
       path: '/form',
@@ -29,10 +29,6 @@ export default new Router({
       name: 'css_test',
       component: css_test
     },
-    {
-      path: '/js',
-      name: 'jsTest',
-      component: jsTest
-    },
+    
   ]
 })

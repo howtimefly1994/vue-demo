@@ -39,15 +39,20 @@ export default {
     return {
       verifyLoadState: "",
       verifiy: "http://localhost:3000/captcha",
+      //  verifiy:'http://49.235.129.13:3000/captcha',
       formModel: {
-        name: "qqq",
-        pas: "",
+        name: "czm",
+        pas: "qwe",
         verifiy: ""
       },
       rules: {
         name: [
           { required: true, message: "请输入名称", trigger: "blur" },
           { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" }
+        ],
+        pas: [
+          { required: true, message: "密码", trigger: "blur" },
+          { min: 3, max: 6, message: "长度在 3 到 6 个字符", trigger: "blur" }
         ]
       }
     };
@@ -76,23 +81,23 @@ export default {
         verifiy: this.formModel.verifiy
       };
       this.$http.user.loginUser(params).then(res => {
-        if (res.data.result.code == 200) {
+        if (res.data.result.code == -1) {
           this.$message({
             message: "登陆成功",
             type: "success"
           });
-          // this.$router.push({
-          //   path: "/table"
-          // });
+          this.$router.push({
+            path: "/main"
+          });
         } else if (res.data.result.code == -2) {
-          const base = "http://localhost:3000/captcha";
+          const base = this.verifiy;
           this.verifiy = base + "?" + Math.random();
           this.$message({
             message: "验证码错误",
             type: "warning"
           });
         } else {
-          const base = "http://localhost:3000/captcha";
+          const base =  this.verifiy;
           this.verifiy = base + "?" + Math.random();
           this.$message({
             message: "账号不存在或者密码错误",
@@ -105,7 +110,7 @@ export default {
       if (!this.verifyLoadState) return;
       // 防止下一次重复点击
       this.verifyLoadState = false;
-      const base = "http://localhost:3000/captcha";
+      const base =  this.verifiy;
       this.verifiy = base + "?" + e.timeStamp;
     }
   }
