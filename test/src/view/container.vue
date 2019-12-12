@@ -1,12 +1,13 @@
 <template>
   <div id="layout">
     <el-container>
-      <el-header>Header</el-header>
-      <el-container>
-        <el-aside width="initial">
+      <el-aside width="initial">
           <sideMenu />
         </el-aside>
-        <el-container>
+      
+      <el-container>
+        <el-header>Header</el-header>
+        <!-- <el-container> -->
           <div class="second_header">
             <div id="iconBox">
               <i class="el-icon-s-unfold" @click="collapseSide()" v-show="$store.state.collapse"></i>
@@ -16,8 +17,8 @@
           <el-main>
              <router-view />
           </el-main>
-          <el-footer>Footer</el-footer>
-        </el-container>
+          <!-- <el-footer>Footer</el-footer> -->
+        <!-- </el-container> -->
       </el-container>
     </el-container>
   </div>
@@ -43,7 +44,7 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped>
 html,
 body,
 #layout,
@@ -54,18 +55,21 @@ body,
 }
 .second_header {
   position: relative;
-  height: 51px;
+  height: 31px;
   width: 100%;
-  background-color: rgb(85, 82, 82);
+  /* background-color: rgb(85, 82, 82);
+   */
+   background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
 }
 #iconBox {
-  width: 30px;
-  height: 30px;
-  font-size: 30px;
+  width: 10px;
+  height: 20px;
+  font-size: 20px;
   /* background-color: yellow; */
   position: absolute;
   top: 50%;
-  margin-top: -17px;
+  margin-top: -11px;
   /* left: 10px; */
 }
 #app {
@@ -81,7 +85,8 @@ body,
   background-color: #262626;
   color: #333;
   text-align: center;
-  line-height: 60px;
+  line-height: 50px;
+  height: 50px !important;
 }
 
 .el-aside {
@@ -92,10 +97,10 @@ body,
 }
 
 .el-main {
-  background-color: #e9eef3;
+  background-color: #f5f7f9;
   color: #333;
   text-align: center;
-  line-height: 160px;
+  /* line-height: 160px; */
 }
 
 /* body > .el-container {

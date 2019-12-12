@@ -55,7 +55,7 @@ export default {
   }
 };
 </script>
-<style lang="">
+<style lang="" scoped>
 /* .el-menu {
   width: 100%;
 } */
@@ -76,4 +76,5 @@ export default {
   font-size: 10px;
   /* padding-left: 0 !important; */
 }
+
 </style>
