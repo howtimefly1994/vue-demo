@@ -1,45 +1,89 @@
 <template>
   <div>
     <div class="searchBox">
-      <el-form ref="form" :model="form"  :inline="true">
-        <el-form-item label="活动名称">
-          <el-input v-model="form.name"></el-input>
-        </el-form-item>
-        <el-form-item label="活动">
-          <el-input v-model="form.age"></el-input>
-        </el-form-item>
-      </el-form>
+      <el-col :span="22">
+        <el-form ref="form" :model="searchForm" :inline="true">
+          <el-form-item label="活动名称">
+            <el-input v-model="form.name"></el-input>
+          </el-form-item>
+          <el-form-item label="活动">
+            <el-input v-model="form.age"></el-input>
+          </el-form-item>
+          <el-form-item label="活动123">
+            <el-input v-model="form.age2"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" icon="el-icon-search" style="vertical-align:middle">搜索</el-button>
+          </el-form-item>
+        </el-form>
+      </el-col>
+      <el-col :span="2">
+         <el-button type="danger" @click="showDialog('Info','add')">新增</el-button>
+      </el-col>
     </div>
     <div class="tableBox">
-       <el-table
-      :data="tableData"
-      style="width: 100%"
-      border>
-      <el-table-column
-        prop="date"
-        label="日期"
-        width="180">
-      </el-table-column>
-      <el-table-column
-        prop="name"
-        label="姓名"
-        width="180">
-      </el-table-column>
-      <el-table-column
-        prop="address"
-        label="地址">
-      </el-table-column>
-    </el-table>
+      <el-table :data="tableData" style="width: 100%" border stripe>
+        <el-table-column prop="date" label="日期" width="180" ></el-table-column>
+        <el-table-column prop="name" label="姓名" width="180"></el-table-column>
+        <el-table-column prop="address" label="地址"></el-table-column>
+        <el-table-column fixed="right" label="操作" width="230">
+          <template slot-scope="scope">
+            <!-- <el-button size="mini" type="warning" @click="handleEdit(scope.$index, scope.row)">编辑</el-button> -->
+            <el-button size="mini" type="warning" @click="showDialog('Info','Info')">编辑</el-button>
+            <el-button size="mini" type="success" @click="showDialog('detail','detail')">详情</el-button>
+            <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
     </div>
+    <div class="pageBox" style="text-align:right">
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page.sync="currentPage1"
+        :page-size="100"
+        layout="total, prev, pager, next"
+        :total="1000"
+      ></el-pagination>
+    </div>
+
+    <component
+      v-bind:is="dialogComponent"
+      :isShow="isShow"
+      @sureDialogFather="getSonSure"
+      :type="dialogType"
+    ></component>
+    <!-- <Info :isShow="isShow" @sureDialogFather="getSonSure"></Info> -->
   </div>
 </template>
 <script>
+import Info from "../test/component/Info";
+import detail from "../test/component/detail";
+import tableMixins from "@/mixins/table-mixins/"
 export default {
+  mixins:[tableMixins],
   data() {
     return {
+      dialogComponent: "", //选择弹出的组件，info、detail
+      dialogType: "", //弹窗类型
+      isShow: false,
+      dialogVisible: false,
       form: {
+        name: "",
+        region: "",
+        date1: "",
+        date2: "",
+        delivery: false,
+        type: [],
+        resource: "",
+        desc: ""
+      },
+      formLabelWidth: "120px",
+      currentPage1: 5,
+      searchForm: {
         name: "1",
-        age:'22'
+        age: "22",
+        age2:""
       },
       rules: {
         name: [
@@ -47,41 +91,60 @@ export default {
           { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" }
         ]
       },
-       tableData: [{
-            date: '2016-05-02',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1518 弄'
-          }, {
-            date: '2016-05-04',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1517 弄'
-          }, {
-            date: '2016-05-01',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1519 弄'
-          }, {
-            date: '2016-05-03',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1516 弄'
-          }]
+      tableData: [
+        {
+          date: "1533293827000",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1518 弄"
+        },
+        {
+          date: "2016-05-04",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1517 弄"
+        }
+      ]
     };
   },
+  components: {
+    Info,
+    detail
+  },
   methods: {
-    submitForm(formName) {
-      console.log("1111");
-
-      this.$refs[formName].validate(valid => {
-        if (valid) {
-          alert("submit!");
-          this.$router.push({ path: "/" });
-        } else {
-          console.log("error submit!!");
-          return false;
-        }
-      });
-    },
     resetForm(formName) {
       this.$refs[formName].resetFields();
+    },
+    handleEdit(index, row) {
+      console.log(index, row);
+      console.log(index);
+    },
+    handleDelete(index, row) {
+      console.log(index, row.date);
+    },
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+    },
+    //判断打开哪个弹窗
+    showDialog(component, type) {
+      // this.dialogFormVisible = true;
+      //  this.dialogComponent = "info";
+      if (type == "Info") {
+        this.dialogType = "编辑";
+      } else if (type == "detail") {
+        this.dialogType = "详情";
+      }else if (type == "add") {
+        this.dialogType = "新增";
+      }
+      this.dialogComponent = component || "Info";
+      this.isShow = true;
+      console.log(this.isShow);
+    },
+    // 确认关闭弹窗，接受子组件传来的方法，后期可用来接受子组件传来的弹窗表单值
+    getSonSure(val) {
+      this.isShow = false;
+      console.log(val)
     }
   }
 };
@@ -90,6 +153,7 @@ export default {
 .searchBox {
   height: 62px;
   width: 100%;
+  /* font-size: 0; */
   margin-bottom: 10px;
   text-align: left;
   line-height: 30px;
@@ -99,16 +163,29 @@ export default {
   background-color: rgb(255, 255, 255);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
 }
+.tableBox {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+  margin-bottom: 20px;
+}
+.pageBox {
+  height: 32px;
+  width: 100%;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+}
+/* 控制表头和内容行高*/
 .el-table__header tr,
-  .el-table__header th {
-    padding: 0;
-    height: 40px;
-    background-color: #3c3c3c;
+.el-table__header th {
+  padding: 0;
+  height: 40px;
+  border-right-color: #3c3c3c;
+  background-color: #3c3c3c;
 }
 .el-table__body tr,
-  .el-table__body td {
-    padding: 0;
-    height: 40px;
+.el-table__body td {
+  padding: 0;
+  height: 40px;
 }
-
 </style>
+
+

@@ -67,13 +67,12 @@ export default {
   border-right-width: 0px;
 }
 /* 下拉菜单字体 */
-.el-submenu__title {
-  font-size: 10px;
-   /* padding-left: 0 !important; */
+.el-aside .el-menu /deep/ .el-submenu .el-submenu__title {
+  font-size: 10px !important;
 }
 /* 普通菜单字体 */
 .el-menu-item {
-  font-size: 10px;
+  font-size: 10px !important;
   /* padding-left: 0 !important; */
 }
 
