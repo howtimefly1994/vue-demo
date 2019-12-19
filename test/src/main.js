@@ -7,6 +7,7 @@ import {store} from '@/store/store.js'
 import ElementUI from 'element-ui'
 import api from './api/index'
 import 'element-ui/lib/theme-chalk/index.css'
+import vueRouter from './router'
 
 Vue.config.productionTip = false
 Vue.prototype.$http = api

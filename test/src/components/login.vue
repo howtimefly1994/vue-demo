@@ -38,11 +38,11 @@ export default {
   data() {
     return {
       verifyLoadState: "",
-      // verifiy: "http://localhost:3000/captcha",
-       verifiy:'http://49.235.129.13:3000/captcha',
+      verifiy: "http://localhost:3000/captcha",
+      //  verifiy:'http://49.235.129.13:3000/captcha',
       formModel: {
-        name: "czm",
-        pas: "qwe",
+        name: "66666",
+        pas: "66666",
         verifiy: ""
       },
       rules: {
@@ -58,9 +58,9 @@ export default {
     };
   },
   created() {
-    this.$http.user.getUser().then(res => {
-      console.log("++" + JSON.stringify(res));
-    });
+    // this.$http.user.getUser().then(res => {
+    //   console.log("++" + JSON.stringify(res));
+    // });
   },
 
   methods: {
@@ -82,6 +82,10 @@ export default {
       };
       this.$http.user.loginUser(params).then(res => {
         if (res.data.result.code == 200) {
+         console.log(res);
+          var token = res.data.result.token
+          //  console.log(token);
+           this.$store.commit('setToken', token)
           this.$message({
             message: "登陆成功",
             type: "success"
@@ -137,7 +141,7 @@ export default {
   width: 400px;
   transform: translate(-50%, -50%);
   background-color: rgb(252, 252, 253);
-  border-radius: 5%;
+  border-radius: 1%;
   padding: 20px 20px;
   border: 1px solid #fff;
   box-shadow: 10px 10px 5px rgb(59, 61, 70);

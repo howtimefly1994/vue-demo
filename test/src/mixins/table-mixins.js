@@ -7,17 +7,18 @@ export default {
     methods: {
         // 时间戳转换成时间
         // 使用element table组件中的formatter属性，传入一个函数
-        formatter(row, column) {
-            var date = new Date(row.cjsj) //时间戳为10位需*1000，时间戳为13位的话不需乘1000
-            var Y = date.getFullYear() + '-'
-            var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-'
-            var D = date.getDate() + ' '
-            var h = date.getHours() + ':'
-            var m = date.getMinutes() + ':'
-            var s = date.getSeconds()
-            return Y + M + D + h + m + s
-            // console.log(timestampToTime (1533293827000))
+        formatDate(row, column) {
+            // let date = new Date(parseInt(row.date) * 1000); 13位时间戳需*1000
+            let date = new Date(parseInt(row.date));//十位时间戳不需要*1000
+            let Y = date.getFullYear() + '-';
+            let M = date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) + '-' : date.getMonth() + 1 + '-';
+            let D = date.getDate() < 10 ? '0' + date.getDate() + ' ' : date.getDate() + ' ';
+            let h = date.getHours() < 10 ? '0' + date.getHours() + ':' : date.getHours() + ':';
+            let m = date.getMinutes()  < 10 ? '0' + date.getMinutes() + ':' : date.getMinutes() + ':';
+            let s = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds();
+            return Y + M + D + h + m + s;
         },
+
     },
     created() {
         console.log('1233333')
