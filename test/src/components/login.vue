@@ -11,13 +11,13 @@
         <span class="svg-container">
           <i class="el-icon-s-cooperation"></i>
         </span>
-        <el-input v-model="formModel.pas" class="form--input"></el-input>
+        <el-input v-model="formModel.pas" class="form--input" show-password ></el-input>
       </el-form-item>
       <el-form-item>
         <span class="svg-container">
           <i class="el-icon-success"></i>
         </span>
-        <el-input v-model="formModel.verifiy" class="txtSearch"></el-input>
+        <el-input v-model="formModel.verifiy" class="txtSearch" @keyup.enter.native="submitForm('ruleForm')"></el-input>
         <img
           class="btnSearch"
           @load="verifyLoadState=true"
@@ -91,7 +91,7 @@ export default {
             type: "success"
           });
           this.$router.push({
-            path: "/main"
+            path: "/index"
           });
         } else if (res.data.result.code == -2) {
           const base = this.verifiy;

@@ -2,22 +2,36 @@
   <div id="layout">
     <el-container>
       <el-aside width="initial">
-          <sideMenu />
-        </el-aside>
-      
+        <sideMenu />
+      </el-aside>
+
       <el-container>
-        <el-header>Header</el-header>
+        <el-header>
+          <el-col :span="23">header</el-col>
+          <el-col :span="1">
+            <el-dropdown>
+              <span class="el-dropdown-link">
+                <el-avatar shape="square" :size="30" :src="squareUrl" ></el-avatar>
+                <i class="el-icon-arrow-down el-icon--right"></i>
+              </span>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item @click.native="loginOut()">退出 </el-dropdown-item>
+                <el-dropdown-item>个人资料</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+          </el-col>
+        </el-header>
         <!-- <el-container> -->
-          <div class="second_header">
-            <div id="iconBox">
-              <i class="el-icon-s-unfold" @click="collapseSide()" v-show="$store.state.collapse"></i>
-              <i class="el-icon-s-fold" @click="collapseSide()" v-show="!$store.state.collapse"></i>
-            </div>
+        <div class="second_header">
+          <div id="iconBox">
+            <i class="el-icon-s-unfold" @click="collapseSide()" v-show="$store.state.collapse"></i>
+            <i class="el-icon-s-fold" @click="collapseSide()" v-show="!$store.state.collapse"></i>
           </div>
-          <el-main>
-             <router-view />
-          </el-main>
-          <!-- <el-footer>Footer</el-footer> -->
+        </div>
+        <el-main>
+          <router-view />
+        </el-main>
+        <!-- <el-footer>Footer</el-footer> -->
         <!-- </el-container> -->
       </el-container>
     </el-container>
@@ -30,13 +44,19 @@ export default {
   name: "App",
   data() {
     return {
-      collapse: this.$store.state.collapse
+      collapse: this.$store.state.collapse,
+      squareUrl: "https://dss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1294403272,3279068192&fm=26&gp=0.jpg",
     };
   },
   methods: {
-    collapseSide() {
+    collapseSide() {//控制折叠
       this.$store.commit("change");
       console.log(this.$store.state.collapse);
+    },
+    loginOut(){
+      this.$router.push({path:'/'})
+      localStorage.removeItem('Authorization');
+      console.log('退出 ');
     }
   },
   components: {
@@ -59,7 +79,7 @@ body,
   width: 100%;
   /* background-color: rgb(85, 82, 82);
    */
-   background-color: #fff;
+  background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
 }
 #iconBox {
@@ -85,14 +105,14 @@ body,
   background-color: #262626;
   color: #333;
   text-align: center;
-  line-height: 50px;
-  height: 50px !important;
+  line-height: 76px;
+  /* height: 50px !important; */
 }
 
 .el-aside {
   background-color: #3c3c3c;
   color: #333;
-  text-align: center;
+  text-align: left;
   line-height: 200px;
 }
 

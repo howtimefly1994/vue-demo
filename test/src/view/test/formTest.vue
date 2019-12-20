@@ -23,9 +23,10 @@
     </div>
     <div class="tableBox">
       <el-table :data="tableData" style="width: 100%" border stripe>
-        <el-table-column prop="date" label="日期" width="180" :formatter="formatDate"></el-table-column>
-        <el-table-column prop="name" label="姓名" width="180"></el-table-column>
-        <el-table-column prop="address" label="地址"></el-table-column>
+        <!-- <el-table-column prop="date" label="人员ID" width="180" :formatter="formatDate"></el-table-column> -->
+        <el-table-column prop="userId" label="人员ID" width="180"></el-table-column>
+         <el-table-column prop="cname" label="姓名" width="180"></el-table-column>
+        <el-table-column prop="cpassword" label="密码"></el-table-column>
         <el-table-column fixed="right" label="操作" width="230">
           <template slot-scope="scope">
             <!-- <el-button size="mini" type="warning" @click="handleEdit(scope.$index, scope.row)">编辑</el-button> -->
@@ -79,7 +80,7 @@ export default {
         desc: ""
       },
       formLabelWidth: "120px",
-      currentPage1: 5,
+      currentPage1: 1,
       searchForm: {
         name: "1",
         age: "22",
@@ -91,19 +92,11 @@ export default {
           { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" }
         ]
       },
-      tableData: [
-        {
-          date: "1533293827000",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "1533293827000",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄"
-        }
-      ]
+      tableData: []//表格数据
     };
+  },
+  created() {
+    this.getTable();
   },
   components: {
     Info,
@@ -149,6 +142,12 @@ export default {
     getSonSure(val) {
       this.isShow = false;
       console.log(val)
+    },
+    getTable(){
+      this.$http.user.getUser().then(res => {
+        console.log('table',res.data.result);
+        this.tableData=res.data.result;
+      })
     }
   }
 };

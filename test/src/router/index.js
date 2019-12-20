@@ -2,11 +2,16 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import login from '@/components/login'
 import container from '@/view/container'
+import index from "@/view/index/index.vue"
 import formTest from '@/view/test/formTest'
 import css_test from '@/components/css_test'
+import pet from '@/view/pet/pet.vue'
 import ElementUI from 'element-ui';
 Vue.use(Router)
-
+const VueRouterPush = Router.prototype.push 
+Router.prototype.push = function push (to) {
+    return VueRouterPush.call(this, to).catch(err => err)
+}
 const vueRouter = new Router({
   routes: [
     {
@@ -29,7 +34,25 @@ const vueRouter = new Router({
           meta: {
             requrieAuth: true
           }
-        }
+        },
+        {
+          path: '/pet',
+          name: 'pet',
+          component: pet,
+          meta: {
+            requrieAuth: true
+          }
+        },
+        {
+          path: '/index',
+          name: 'index',
+          component: index,
+          meta: {
+            requrieAuth: true
+          },
+          
+        },
+
       ]
     },
     // {
@@ -62,8 +85,8 @@ vueRouter.beforeEach((to, from, next) => {
       });
       setTimeout(() => {
         next({ path: '/' })
-      }, 1000);
-      
+      }, 2000);
+
     }
   } else {
     next()

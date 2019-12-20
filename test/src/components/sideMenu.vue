@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-menu
-      default-active="$route.path"
+      :default-active="activePath"
       class="el-menu-vertical-demo"
       @open="handleOpen"
       @close="handleClose"
@@ -11,21 +11,21 @@
       :collapse=$store.state.collapse
       router
     >
+     <el-menu-item index="/index">
+        <i class="el-icon-document"></i>
+        <span slot="title">首页</span>
+      </el-menu-item>
       <el-submenu index="1">
         <template slot="title">
           <i class="el-icon-location"></i>
-          <span>导航一</span>
+          <span>人员管理</span>
         </template>
-        <el-menu-item index="1-1">选项1</el-menu-item>
+        <el-menu-item index="/form">选项1</el-menu-item>
         <el-menu-item index="1-2">选项2</el-menu-item>
       </el-submenu>
-      <el-menu-item index="/form">
+      <el-menu-item index="/pet">
         <i class="el-icon-menu"></i>
-        <span slot="title">导航二</span>
-      </el-menu-item>
-      <el-menu-item index="/form">
-        <i class="el-icon-document"></i>
-        <span slot="title">导航三</span>
+        <span slot="title">这个管理</span>
       </el-menu-item>
       <el-menu-item index="4">
         <i class="el-icon-setting"></i>
@@ -39,7 +39,7 @@ export default {
   name: "sideMenu",
   data() {
     return {
-       
+       activePath:'/index'
     };
   },
   created() {
@@ -60,20 +60,12 @@ export default {
   width: 100%;
 } */
 .el-menu-vertical-demo:not(.el-menu--collapse) {
-  width: 150px;
+  width: 200px;
   min-height: 400px;
 }
 .el-menu {
   border-right-width: 0px;
 }
-/* 下拉菜单字体 */
-.el-aside .el-menu /deep/ .el-submenu .el-submenu__title {
-  font-size: 10px !important;
-}
-/* 普通菜单字体 */
-.el-menu-item {
-  font-size: 10px !important;
-  /* padding-left: 0 !important; */
-}
+
 
 </style>
