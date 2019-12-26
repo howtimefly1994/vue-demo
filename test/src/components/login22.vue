@@ -1,46 +1,35 @@
 <template>
   <div class="login_warp">
-    <el-card class="box-card">
-      <div slot="header" class="clearfix">
-        <span style="font-weight:bold">登陆</span>
-      </div>
-      <div class="text item">
-        <el-form class="form_warp" :model="formModel" :rules="rules" ref="ruleForm">
-          <el-form-item prop="name">
-            <span class="svg-container">
-              <i class="el-icon-user-solid"></i>
-            </span>
-            <el-input v-model="formModel.name" class="form--input"></el-input>
-          </el-form-item>
-          <el-form-item prop="pas">
-            <span class="svg-container">
-              <i class="el-icon-s-cooperation"></i>
-            </span>
-            <el-input v-model="formModel.pas" class="form--input" show-password></el-input>
-          </el-form-item>
-          <el-form-item>
-            <span class="svg-container">
-              <i class="el-icon-success"></i>
-            </span>
-            <el-input
-              v-model="formModel.verifiy"
-              class="txtSearch"
-              @keyup.enter.native="submitForm('ruleForm')"
-            ></el-input>
-            <img
-              class="btnSearch"
-              @load="verifyLoadState=true"
-              @click="toggleVerify"
-              :src="verifiy"
-              alt
-            />
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="submitForm('ruleForm')" style="width:100%">登陆</el-button>
-          </el-form-item>
-        </el-form>
-      </div>
-    </el-card>
+    <el-form class="form_warp" :model="formModel" :rules="rules" ref="ruleForm">
+      <el-form-item prop="name">
+        <span class="svg-container">
+          <i class="el-icon-user-solid"></i>
+        </span>
+        <el-input v-model="formModel.name" class="form--input"></el-input>
+      </el-form-item>
+      <el-form-item prop="pas">
+        <span class="svg-container">
+          <i class="el-icon-s-cooperation"></i>
+        </span>
+        <el-input v-model="formModel.pas" class="form--input" show-password ></el-input>
+      </el-form-item>
+      <el-form-item>
+        <span class="svg-container">
+          <i class="el-icon-success"></i>
+        </span>
+        <el-input v-model="formModel.verifiy" class="txtSearch" @keyup.enter.native="submitForm('ruleForm')"></el-input>
+        <img
+          class="btnSearch"
+          @load="verifyLoadState=true"
+          @click="toggleVerify"
+          :src="verifiy"
+          alt
+        />
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="submitForm('ruleForm')" style="width:100%">登陆</el-button>
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 
@@ -93,10 +82,10 @@ export default {
       };
       this.$http.user.loginUser(params).then(res => {
         if (res.data.result.code == 200) {
-          console.log(res);
-          var token = res.data.result.token;
+         console.log(res);
+          var token = res.data.result.token
           //  console.log(token);
-          this.$store.commit("setToken", token);
+           this.$store.commit('setToken', token)
           this.$message({
             message: "登陆成功",
             type: "success"
@@ -112,7 +101,7 @@ export default {
             type: "warning"
           });
         } else {
-          const base = this.verifiy;
+          const base =  this.verifiy;
           this.verifiy = base + "?" + Math.random();
           this.$message({
             message: "账号不存在或者密码错误",
@@ -125,7 +114,7 @@ export default {
       if (!this.verifyLoadState) return;
       // 防止下一次重复点击
       this.verifyLoadState = false;
-      const base = this.verifiy;
+      const base =  this.verifiy;
       this.verifiy = base + "?" + e.timeStamp;
     }
   }
@@ -142,12 +131,24 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: url("../assets/img/login-bg.png");
+  background-image: url('../assets/img/login-bg.png');
   background-color: rgb(48, 65, 86);
+}
+.form_warp {
+  position: relative;
+  top: 60%;
+  left: 80%;
+  width: 400px;
+  transform: translate(-50%, -50%);
+  background-color: rgb(252, 252, 253);
+  border-radius: 1%;
+  padding: 20px 20px;
+  border: 1px solid #fff;
+  box-shadow: 10px 10px 5px rgb(59, 61, 70);
 }
 .txtSearch {
   vertical-align: middle;
-  width: 60%;
+  width: 253px;
   /* float: left; */
   /* padding-bottom: 20px; */
 }
@@ -162,28 +163,5 @@ export default {
 }
 .form--input {
   width: 89%;
-}
-
-.text {
-  font-size: 14px;
-}
-.item {
-  margin-bottom: 18px;
-}
-.clearfix:before,
-.clearfix:after {
-  display: table;
-  content: "";
-}
-.clearfix:after {
-  clear: both;
-}
-
-.box-card {
-  position: relative;
-  top: 30%;
-  left: 68%;
-  width: 400px;
-  box-shadow: 5px 5px 4px rgb(59, 61, 70);
 }
 </style>

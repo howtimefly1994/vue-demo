@@ -13,6 +13,7 @@ Router.prototype.push = function push (to) {
     return VueRouterPush.call(this, to).catch(err => err)
 }
 const vueRouter = new Router({
+  // mode:'history',
   routes: [
     {
       path: '/',
@@ -85,7 +86,7 @@ vueRouter.beforeEach((to, from, next) => {
       });
       setTimeout(() => {
         next({ path: '/' })
-      }, 2000);
+      }, 3000);
 
     }
   } else {

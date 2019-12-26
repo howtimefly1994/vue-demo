@@ -102,7 +102,8 @@ body,
 }
 .el-header,
 .el-footer {
-  background-color: #262626;
+  height: 57px !important;
+  background-color: #304156;
   color: #333;
   text-align: center;
   line-height: 76px;
@@ -110,7 +111,7 @@ body,
 }
 
 .el-aside {
-  background-color: #3c3c3c;
+  background-color: #001529;
   color: #333;
   text-align: left;
   line-height: 200px;

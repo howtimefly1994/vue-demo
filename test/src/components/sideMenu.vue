@@ -5,9 +5,9 @@
       class="el-menu-vertical-demo"
       @open="handleOpen"
       @close="handleClose"
-      background-color="#3C3C3C"
-      text-color="#fff"
-      active-text-color="#ffd04b"
+      background-color="#001529"
+      text-color="rgba(255,255,255,0.7)"
+      active-text-color="#fff"
       :collapse=$store.state.collapse
       router
     >
@@ -43,9 +43,16 @@ export default {
     };
   },
   created() {
-   
+   this.getHref();
   },
   methods: {
+    // 解决页面刷新后菜单无法高亮
+    getHref(){
+      let nowHref=window.location.href;
+      let url=nowHref.split('#')[1];
+      this.activePath=url;
+      console.log( this.activePath);
+    },
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
     },
@@ -65,6 +72,9 @@ export default {
 }
 .el-menu {
   border-right-width: 0px;
+}
+.is-active{
+  background-color: #2D8CF0 !important;
 }
 
 
