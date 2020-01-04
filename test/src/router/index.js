@@ -6,11 +6,12 @@ import index from "@/view/index/index.vue"
 import formTest from '@/view/test/formTest'
 import css_test from '@/components/css_test'
 import pet from '@/view/pet/pet.vue'
+import test from '@/view/thetest'
 import ElementUI from 'element-ui';
 Vue.use(Router)
-const VueRouterPush = Router.prototype.push 
-Router.prototype.push = function push (to) {
-    return VueRouterPush.call(this, to).catch(err => err)
+const VueRouterPush = Router.prototype.push
+Router.prototype.push = function push(to) {
+  return VueRouterPush.call(this, to).catch(err => err)
 }
 const vueRouter = new Router({
   // mode:'history',
@@ -33,7 +34,8 @@ const vueRouter = new Router({
           name: 'formTest',
           component: formTest,
           meta: {
-            requrieAuth: true
+            requrieAuth: true,
+            title: '人员管理'
           }
         },
         {
@@ -41,7 +43,8 @@ const vueRouter = new Router({
           name: 'pet',
           component: pet,
           meta: {
-            requrieAuth: true
+            requrieAuth: true,
+            title: '宠物管理'
           }
         },
         {
@@ -49,11 +52,21 @@ const vueRouter = new Router({
           name: 'index',
           component: index,
           meta: {
-            requrieAuth: true
+            requrieAuth: true,
+            title: '首页'
           },
-          
-        },
 
+        },
+        {
+          path: '/test',
+          name: 'test',
+          component: test,
+          meta: {
+            requrieAuth: true,
+            title: '测试'
+          },
+
+        },
       ]
     },
     // {

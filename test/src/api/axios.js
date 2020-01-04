@@ -20,7 +20,6 @@ instance.defaults.withCredentials = true;
 // 每次请求都获取localStorage里面的token
 instance.interceptors.request.use(function (config) {
   let Authorization = localStorage.getItem('Authorization')
-  // let Authorization='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiNjY2NjYiLCJfaWQiOiI2NjY2NiIsImlhdCI6MTU3NjY1MjAzNiwiZXhwIjoxNTc2NjUyNjM2fQ.JherIwGlkzvOfP90RrQDJ7HhTf1dpohmPfuMwh_c_Xw'
   if (Authorization) {
     Authorization = 'bearer ' + Authorization.replace(/'|"/g, ' ')
     // Object.assign(config.headers,{'authorization':Authorization});

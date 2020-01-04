@@ -67,6 +67,9 @@ export default {
     return {
       dialogComponent: "", //选择弹出的组件，info、detail
       dialogType: "", //弹窗类型
+      currentPage1: 1, //当前页
+      tableData: [], //表格数据,
+      pagesize: 10, //每页数据
       isShow: false,
       dialogVisible: false,
       form: {
@@ -80,9 +83,7 @@ export default {
         desc: ""
       },
       formLabelWidth: "120px",
-      currentPage1: 1, //当前页
-      tableData: [], //表格数据,
-      pagesize: 10, //每页数据
+      
       searchForm: {
         name: "1",
         age: "22",
@@ -139,21 +140,21 @@ export default {
       }
       this.dialogComponent = component || "Info";
       this.isShow = true;
-      console.log(this.isShow);
+      // console.log(this.isShow);
     },
     // 确认关闭弹窗，接受子组件传来的方法，后期可用来接受子组件传来的弹窗表单值
     getSonSure(val) {
       this.isShow = false;
-      console.log(val);
+      // console.log(val);
     },
     getTable() {
       let params = {
         currentPage: this.currentPage1,
         pageSize: this.pagesize
       };
-      console.log("this,", this);
+      // console.log("this,", this);
       this.$http.user.getUser(params).then(res => {
-        console.log("table", res.data.result);
+        // console.log("table", res.data.result);
         this.tableData = res.data.result;
       });
     }
@@ -188,9 +189,9 @@ export default {
  .el-table__header tr,
 .el-table__header th {
   padding: 0;
-  height: 40px;
+  height: 50px;
   border-right-color: #3c3c3c;
-  background-color: #3c3c3c;
+  background-color: #304156;
 }
 .el-table__body tr,
 .el-table__body td {

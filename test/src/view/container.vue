@@ -11,11 +11,11 @@
           <el-col :span="1">
             <el-dropdown>
               <span class="el-dropdown-link">
-                <el-avatar shape="square" :size="30" :src="squareUrl" ></el-avatar>
+                <el-avatar shape="square" :size="30" :src="squareUrl"></el-avatar>
                 <i class="el-icon-arrow-down el-icon--right"></i>
               </span>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item @click.native="loginOut()">退出 </el-dropdown-item>
+                <el-dropdown-item @click.native="loginOut()">退出</el-dropdown-item>
                 <el-dropdown-item>个人资料</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
@@ -26,6 +26,15 @@
           <div id="iconBox">
             <i class="el-icon-s-unfold" @click="collapseSide()" v-show="$store.state.collapse"></i>
             <i class="el-icon-s-fold" @click="collapseSide()" v-show="!$store.state.collapse"></i>
+          </div>
+          <div id="breadcrumbBox">
+            <!-- <i class="el-icon-delete"></i> -->
+            <el-breadcrumb separator-class="el-icon-arrow-right">
+              <el-breadcrumb-item
+                v-for="(item,index) in breadcrumb"
+                :key="index"
+              >{{item.meta.title}}</el-breadcrumb-item>
+            </el-breadcrumb>
           </div>
         </div>
         <el-main>
@@ -44,19 +53,27 @@ export default {
   name: "App",
   data() {
     return {
+      // breadcrumb: "",
       collapse: this.$store.state.collapse,
-      squareUrl: "https://dss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1294403272,3279068192&fm=26&gp=0.jpg",
+      squareUrl:
+        "https://dss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1294403272,3279068192&fm=26&gp=0.jpg"
     };
   },
   methods: {
-    collapseSide() {//控制折叠
+    collapseSide() {
+      //控制折叠
       this.$store.commit("change");
       console.log(this.$store.state.collapse);
     },
-    loginOut(){
-      this.$router.push({path:'/'})
-      localStorage.removeItem('Authorization');
-      console.log('退出 ');
+    loginOut() {
+      this.$router.push({ path: "/" });
+      localStorage.removeItem("Authorization");
+      console.log("退出 ");
+    }
+  },
+  computed: {
+    breadcrumb() {
+      return this.$route.matched.slice(1);
     }
   },
   components: {
@@ -86,11 +103,20 @@ body,
   width: 10px;
   height: 20px;
   font-size: 20px;
-  /* background-color: yellow; */
   position: absolute;
   top: 50%;
   margin-top: -11px;
-  /* left: 10px; */
+}
+#breadcrumbBox {
+  width: 500px;
+  height: 20px;
+  font-size: 20px;
+  line-height: 20px;
+  position: absolute;
+  top: 63%;
+  text-align: left;
+  margin-top: -11px;
+  margin-left: 27px;
 }
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;

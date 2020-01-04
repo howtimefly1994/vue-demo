@@ -42,7 +42,6 @@ export default {
   watch: {
     isShow() {
       this.dialogVisible = this.isShow;
-      // console.log(this.dialogVisible);
     }
   },
   data() {

@@ -51,6 +51,7 @@ export default {
       verifyLoadState: "",
       verifiy: "http://localhost:3000/captcha",
       //  verifiy:'http://49.235.129.13:3000/captcha',
+      // verifiy:"http://chen1994.club:3000/captcha",
       formModel: {
         name: "66666",
         pas: "66666",
