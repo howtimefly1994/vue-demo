@@ -6,7 +6,7 @@ import index from "@/view/index/index.vue"
 import formTest from '@/view/test/formTest'
 import css_test from '@/components/css_test'
 import pet from '@/view/pet/pet.vue'
-import test from '@/view/thetest'
+import markdown from '@/view/markdown/index.vue'
 import ElementUI from 'element-ui';
 Vue.use(Router)
 const VueRouterPush = Router.prototype.push
@@ -58,12 +58,12 @@ const vueRouter = new Router({
 
         },
         {
-          path: '/test',
-          name: 'test',
-          component: test,
+          path: '/markdown',
+          name: 'markdown',
+          component: markdown,
           meta: {
             requrieAuth: true,
-            title: '测试'
+            title: 'markdown'
           },
 
         },
@@ -99,7 +99,7 @@ vueRouter.beforeEach((to, from, next) => {
       });
       setTimeout(() => {
         next({ path: '/' })
-      }, 3000);
+      }, 1000);
 
     }
   } else {

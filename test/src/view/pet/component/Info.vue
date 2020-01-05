@@ -7,13 +7,13 @@
         :before-close="closeDialog"
         :modal="false"
       >
-        <el-form :model="infoForm">
+        <el-form :model="infoForm" :rules="rules" ref="infoForm">
           <el-row :gutter="20">
             <el-col :span="12">
               <el-form-item label="ID" :label-width="formLabelWidth">
                 <el-input v-model="infoForm.pid" autocomplete="off" :disabled="true"></el-input>
               </el-form-item>
-              <el-form-item label="名字" :label-width="formLabelWidth">
+              <el-form-item label="名字" :label-width="formLabelWidth" prop="pname">
                 <el-input v-model="infoForm.pname" autocomplete="off"></el-input>
               </el-form-item>
               <el-form-item label="头像" :label-width="formLabelWidth">
@@ -50,8 +50,8 @@
           </el-row>
         </el-form>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="closeDialog()">取 消</el-button>
-          <el-button type="primary" @click="closeDialog()">确 定</el-button>
+          <el-button @click="closeDialog('concel','infoForm')">取 消</el-button>
+          <el-button type="primary" @click="closeDialog('sure','infoForm')">确 定</el-button>
         </div>
       </el-dialog>
     </div>
@@ -64,10 +64,11 @@ export default {
   name: "Info",
   data() {
     return {
-      imageUrl: "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2524666289,3365852660&fm=26&gp=0.jpg",
+      imageUrl:
+        "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2524666289,3365852660&fm=26&gp=0.jpg",
       infoForm: {
         pid: "",
-        name: "",
+        pname: "",
         sex: "",
         age: "",
         creatTime: ""
@@ -82,15 +83,37 @@ export default {
           label: "女"
         }
       ],
-      value: ""
+      value: "",
+      rules: {
+        pname: [
+          { required: true, message: "请输入名称", trigger: "blur" },
+          { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" }
+        ]
+      }
     };
   },
   mounted() {
     this.getInfoForm();
   },
   methods: {
-    closeDialog() {
-      this.$emit("sureDialogFather");
+    closeDialog(val, infoForm) {
+      if (val == "sure") {
+        this.$refs[infoForm].validate(valid => {
+          if (valid) {
+            this.updateInfoForm(); //更新数据
+            this.$emit("sureDialogFather"); //传给父组件，告知弹窗关闭
+            this.$message({
+              type:"success",
+              message:"编辑成功"
+            })
+          } else {
+            console.log("error submit!!");
+            return false;
+          }
+        });
+      } else {
+        this.$emit("sureDialogFather");//如果是取消按钮，直接关闭弹窗
+      }
     },
     selectSex(val) {
       //获取性别下拉选中
@@ -112,7 +135,7 @@ export default {
       }
       return isJPG && isLt2M;
     },
-
+    // 获取编辑页面数据
     getInfoForm() {
       let params = {
         pid: this.row.pid
@@ -121,6 +144,12 @@ export default {
         this.infoForm = res.data.result[0];
         this.infoForm.creatTime = this.formatDate(this.infoForm); //调用mixins里面的方法对时间戳进行转换，下面性别也是
         this.value = res.data.result[0].sex;
+      });
+    },
+    updateInfoForm() {
+      let params = this.infoForm;
+      this.$http.user.updateInfoForm(params).then(res => {
+        console.log(res);
       });
     }
   }

@@ -35,10 +35,10 @@
         </el-col>
       </div>
       <div id="tableBox">
-        <el-table :data="tableData" style="width: 100%" border stripe>
+        <el-table :data="tableData" style="width: 100%" border stripe >
           <!-- <el-table-column prop="date" label="人员ID" width="180" :formatter="formatDate"></el-table-column> -->
           <el-table-column prop="pid" label="ID" width="180"></el-table-column>
-          <el-table-column prop="pname" label="姓名" width="180"></el-table-column>
+          <el-table-column prop="pname" label="姓名" width="180" :show-overflow-tooltip='true'></el-table-column>
           <el-table-column prop="age" label="年龄"></el-table-column>
           <el-table-column prop="sex" label="性别" :formatter="formatGender"></el-table-column>
           <el-table-column prop="creatTime" label="时间" :formatter="formatDate"></el-table-column>
@@ -101,6 +101,10 @@ export default {
         sex: ""
       },
       options: [
+        {
+          value: "",
+          label: "全部"
+        },
         {
           value: "1",
           label: "男"

@@ -17,7 +17,7 @@
       </el-menu-item>
       <el-submenu index="1">
         <template slot="title">
-          <i class="el-icon-location"></i>
+          <i class="el-icon-s-custom"></i>
           <span>人员管理</span>
         </template>
         <el-menu-item index="/form">选项1</el-menu-item>
@@ -27,9 +27,9 @@
         <i class="el-icon-menu"></i>
         <span slot="title">这个管理</span>
       </el-menu-item>
-      <el-menu-item index="/test">
-        <i class="el-icon-setting"></i>
-        <span slot="title">导航四</span>
+      <el-menu-item index="/markdown">
+        <i class="el-icon-s-order"></i>
+        <span slot="title">Markdown</span>
       </el-menu-item>
     </el-menu>
   </div>

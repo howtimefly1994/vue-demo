@@ -46,6 +46,10 @@ export default {
         // 确认关闭弹窗，接受子组件传来的方法，后期可用来接受子组件传来的弹窗表单值
         getSonSure(val) {
             this.isShow = false;
+            console.log('弹窗关闭-----',this.isShow);
+           setTimeout(() => {
+               this.getTable();
+           }, 500);
         },
 
     },

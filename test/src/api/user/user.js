@@ -20,5 +20,8 @@ const user = {
     delectByPid(params){
         return axios.post('pet/deleteByPid',qs.stringify(params))
     },
+    updateInfoForm(params){
+        return axios.post('pet/updateByPid',qs.stringify(params))
+    },
 }
 export default user
