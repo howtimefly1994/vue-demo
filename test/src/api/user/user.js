@@ -23,5 +23,18 @@ const user = {
     updateInfoForm(params){
         return axios.post('pet/updateByPid',qs.stringify(params))
     },
+    //markdown
+    findAllTree(params){
+        return axios.get('markdown/findAllTree')
+    },
+    addSonTree(params){
+        return axios.post('markdown/addSonTree',qs.stringify(params))
+    },
+    getMarkdownByUnid(params){
+        return axios.get('markdown/getMarkdownByUnid?unid='+params.unid)
+    },
+    updateMarkdownByUnid(params){
+        return axios.post('markdown/updateMarkdownByUnid',qs.stringify(params))
+    },
 }
 export default user
