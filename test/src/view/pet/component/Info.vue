@@ -19,12 +19,13 @@
               <el-form-item label="头像" :label-width="formLabelWidth">
                 <el-upload
                   class="avatar-uploader"
-                  action="https://jsonplaceholder.typicode.com/posts/"
+                  action="http://localhost:3000/image"
                   :show-file-list="false"
                   :on-success="handleAvatarSuccess"
                   :before-upload="beforeAvatarUpload"
+                  :headers="myHeaders"
                 >
-                  <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+                  <img v-if="infoForm.imageUrl" :src="infoForm.imageUrl" class="avatar" />
                   <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                 </el-upload>
               </el-form-item>
@@ -59,18 +60,19 @@
 </template>
 <script>
 import dialogMinxins from "@/mixins/dialog-mixins";
+ 
 export default {
   mixins: [dialogMinxins],
   name: "Info",
   data() {
     return {
-      imageUrl:
-        "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2524666289,3365852660&fm=26&gp=0.jpg",
+      myHeaders: { },
       infoForm: {
         pid: "",
         pname: "",
         sex: "",
         age: "",
+        imageUrl: "",
         creatTime: ""
       },
       options: [
@@ -97,22 +99,23 @@ export default {
   },
   methods: {
     closeDialog(val, infoForm) {
+      console.log(this.infoForm);
       if (val == "sure") {
         this.$refs[infoForm].validate(valid => {
           if (valid) {
             this.updateInfoForm(); //更新数据
             this.$emit("sureDialogFather"); //传给父组件，告知弹窗关闭
             this.$message({
-              type:"success",
-              message:"编辑成功"
-            })
+              type: "success",
+              message: "编辑成功"
+            });
           } else {
             console.log("error submit!!");
             return false;
           }
         });
       } else {
-        this.$emit("sureDialogFather");//如果是取消按钮，直接关闭弹窗
+        this.$emit("sureDialogFather"); //如果是取消按钮，直接关闭弹窗
       }
     },
     selectSex(val) {
@@ -121,7 +124,11 @@ export default {
     },
     // 头像图片
     handleAvatarSuccess(res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw);
+      this.$message.success("success");
+      let path = "";
+      path = `http://localhost:3000` + `/img/markdown/${res.imgName}`;
+      this.infoForm.imageUrl = path;
+      this.$set(this.infoForm, this.infoForm.imageUrl, path);
     },
     beforeAvatarUpload(file) {
       const isJPG = file.type === "image/jpeg";
@@ -137,6 +144,8 @@ export default {
     },
     // 获取编辑页面数据
     getInfoForm() {
+     
+  
       let params = {
         pid: this.row.pid
       };
@@ -148,6 +157,7 @@ export default {
     },
     updateInfoForm() {
       let params = this.infoForm;
+      console.log('params',params);
       this.$http.user.updateInfoForm(params).then(res => {
         console.log(res);
       });

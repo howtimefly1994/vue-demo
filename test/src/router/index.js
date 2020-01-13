@@ -4,6 +4,7 @@ import login from '@/components/login'
 import container from '@/view/container'
 import index from "@/view/index/index.vue"
 import formTest from '@/view/test/formTest'
+import thetest from '@/view/thetest'
 import css_test from '@/components/css_test'
 import pet from '@/view/pet/pet.vue'
 import markdown from '@/view/markdown/index.vue'
@@ -39,6 +40,15 @@ const vueRouter = new Router({
           }
         },
         {
+          path: '/thetest',
+          name: 'thetest',
+          component: thetest,
+          meta: {
+            requrieAuth: true,
+            title: '测试'
+          }
+        },
+        {
           path: '/pet',
           name: 'pet',
           component: pet,
@@ -65,6 +75,7 @@ const vueRouter = new Router({
             requrieAuth: true,
             title: 'markdown'
           },
+          
 
         },
       ]

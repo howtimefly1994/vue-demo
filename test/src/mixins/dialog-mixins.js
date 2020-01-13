@@ -15,7 +15,7 @@ export default {
         return {
             dialogVisible: this.isShow,//弹窗是否关闭
             formLabelWidth: "120px",//弹窗宽度
-
+           
         }
     },
     watch: {//在data中直接赋值，只会在实例初始化的时候渲染，所以需要用wathch方法进行监视
@@ -48,9 +48,14 @@ export default {
             }
             return gender
         },
+        getToken() {
+            let token = "bearer " + localStorage.getItem("Authorization");
+            this.$set(this.myHeaders,'Authorization',token)
+        }
     },
-    created() {
 
+    created() {
+        this.getToken();
     },
 
 }

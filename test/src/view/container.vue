@@ -92,7 +92,7 @@ body,
 }
 .second_header {
   position: relative;
-  height: 31px;
+  min-height: 31px;
   width: 100%;
   /* background-color: rgb(85, 82, 82);
    */
