@@ -66,7 +66,7 @@ export default {
   name: "Info",
   data() {
     return {
-      myHeaders: { },
+     
       infoForm: {
         pid: "",
         pname: "",
@@ -157,7 +157,7 @@ export default {
     },
     updateInfoForm() {
       let params = this.infoForm;
-      console.log('params',params);
+      //console.log('params',params);
       this.$http.user.updateInfoForm(params).then(res => {
         console.log(res);
       });

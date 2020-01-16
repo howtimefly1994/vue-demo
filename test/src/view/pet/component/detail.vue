@@ -43,6 +43,11 @@
                 <el-input v-model="detForm.creatTime" autocomplete="off" :disabled="true"></el-input>
               </el-form-item>
             </el-col>
+             <el-col :span="12">
+              <el-form-item label="创建时间" :label-width="formLabelWidth">
+                <img :src="detForm.imageUrl" alt="" style="width:178px;height:178px;">
+              </el-form-item>
+            </el-col>
           </el-row>
         </el-form>
       </el-dialog>

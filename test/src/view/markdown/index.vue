@@ -8,7 +8,7 @@
               <i class="el-icon-circle-plus-outline" @click="addTree" />
             </el-tooltip>
             <el-tooltip effect="dark" content="编辑" placement="top" v-if="!isFirstLevel">
-              <i class="el-icon-edit" />
+              <i class="el-icon-edit"  @click="editTree" />
             </el-tooltip>
             <el-tooltip effect="dark" content="删除" placement="top" v-if="!isFirstLevel">
               <i class="el-icon-delete" @click="deleteTree" />
@@ -66,6 +66,7 @@
               @save="save"
               :subfield="false"
               @change="change"
+              defaultOpen="preview"
             ></mavon-editor>
           </div>
         </div>
@@ -77,6 +78,7 @@
       :isShow="isShow"
       @sureDialogFather="getSonSure"
       :type="dialogType"
+      :row="seletTreeData"
     ></component>
   </div>
 </template>
@@ -84,13 +86,15 @@
 import { mavonEditor } from "mavon-editor";
 import "mavon-editor/dist/css/index.css";
 import addTree from "./component/addTree";
+import editTree from "./component/editTree";
 import tableMixins from "@/mixins/table-mixins/";
 export default {
   name: "markdown",
   mixins: [tableMixins],
   components: {
     mavonEditor,
-    addTree
+    addTree,
+    editTree
   },
   data() {
     return {
@@ -130,12 +134,15 @@ export default {
       this.seletTreeData = data;
       this.seletTreeNode = node;
       this.getMarkdown();
-      console.log(data, node);
-      //   console.log(this.seletTreeData, this.seletTreeNode);
+      // console.log(data, node);
+         console.log(this.seletTreeData, this.seletTreeNode);
     },
     // 新增子节点
     addTree() {
-      this.showDialog("addTree");
+      this.showDialog("addTree","add");
+    },
+    editTree(){
+      this.showDialog("editTree",'Info')
     },
     //删除子节点
     deleteTree() {
@@ -156,7 +163,7 @@ export default {
                 type: "success"
               });
               this.getTable();
-              console.log(this.data);
+              // console.log(this.data);
             } else {
               this.$message({
                 message: res.data.msg,
@@ -178,7 +185,7 @@ export default {
         //vue的data中对于数组的改变，无法触发视图的渲染，所以这里要先定义一个变量，获取接口值后再把变量的值传给data
         {
           unid: "0",
-          label: "一级 1",
+          label: "全部笔记",
           children: []
         }
       ];
@@ -230,7 +237,7 @@ export default {
           });
         }
       });
-      console.log("markdown", value.length);
+      // console.log("markdown", value.length);
     },
     change(value, render) {
       // render 为 markdown 解析后的结果[html]

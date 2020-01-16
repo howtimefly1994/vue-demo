@@ -26,7 +26,7 @@
 <script>
 import dialogMinxins from "@/mixins/dialog-mixins";
 export default {
-  name: "addTree",
+  name: "editTree",
   mixins: [dialogMinxins],
   data() {
     return {
@@ -38,13 +38,16 @@ export default {
         label: [
           { required: true, message: "请输入名称", trigger: "blur" },
           { min: 1, max: 9, message: "长度在 1 到 9 个字符", trigger: "blur" }
-        ],
+        ]
         // sort: [
         //   { required: true, message: "请输入排序", trigger: "blur" },
         //   { min: 3, max: 5, message: "长度在 1 到 5 个字符", trigger: "blur" }
         // ]
       }
     };
+  },
+  created() {
+      this.getInfoForm();
   },
   methods: {
     closeDialog(val, treeForm) {
@@ -66,11 +69,21 @@ export default {
         this.$emit("sureDialogFather"); //如果是取消按钮，直接关闭弹窗
       }
     },
-    updateInfoForm() {
-      let params = this.treeForm;
-      this.$http.user.addSonTree(params).then(res => {
-        console.log(res);
-      });
+    //获取表单数据
+    getInfoForm(){
+        let params ={
+            unid:this.row.unid
+        }
+        this.$http.user.findTreeByUnid(params).then(res => {
+            this.treeForm=res.data.result[0]
+        })
+    },
+    //提交表单数据
+    updateInfoForm(){
+        let params = this.treeForm;
+        this.$http.user.updateTreeByUnid(params).then(res => {
+            
+        })
     }
   }
 };

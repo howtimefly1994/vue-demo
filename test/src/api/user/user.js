@@ -39,5 +39,11 @@ const user = {
     deleteTreeByUnid(params){
         return axios.post('markdown/deleteTreeByUnid',qs.stringify(params))
     },
+    findTreeByUnid(params){
+        return axios.get('markdown/findTreeByUnid?unid='+params.unid)
+    },
+    updateTreeByUnid(params){
+        return axios.post('markdown/updateTreeByUnid',qs.stringify(params))
+    },
 }
 export default user

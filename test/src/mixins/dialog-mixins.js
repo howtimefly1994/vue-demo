@@ -15,13 +15,13 @@ export default {
         return {
             dialogVisible: this.isShow,//弹窗是否关闭
             formLabelWidth: "120px",//弹窗宽度
-           
+            myHeaders: { },
         }
     },
     watch: {//在data中直接赋值，只会在实例初始化的时候渲染，所以需要用wathch方法进行监视
         isShow() {
             this.dialogVisible = this.isShow;
-            console.log(this.dialogVisible);
+            // console.log(this.dialogVisible);
         },
     },
     methods: {
