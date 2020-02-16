@@ -7,8 +7,8 @@
 
       <el-container>
         <el-header>
-          <el-col :span="23">header</el-col>
-          <el-col :span="1">
+          <el-col :span="22">header</el-col>
+          <el-col :span="2">
             <el-dropdown>
               <span class="el-dropdown-link">
                 <el-avatar shape="square" :size="30" :src="squareUrl"></el-avatar>

@@ -159,7 +159,7 @@ export default {
       let params = this.infoForm;
       //console.log('params',params);
       this.$http.user.updateInfoForm(params).then(res => {
-        console.log(res);
+        console.log(res.data);
       });
     }
   }

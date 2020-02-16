@@ -81,9 +81,7 @@ export default {
       }
     };
   },
-  mounted() {
-    this.getInfoForm();
-  },
+
   methods: {
     //新增按钮和取消按钮，点击提交表单
     closeDialog(val, form) {
@@ -124,15 +122,9 @@ export default {
     },
     //清除表单数据
     clearData() {
-      this.$refs.form.resetFields();
-    },
-    getInfoForm() {
-      let params = {
-        bugId: this.row.bugId
-      };
-      this.$http.user.detailByBugId(params).then(res => {
-        this.form = res.data.result[0];
-      });
+
+    this.$refs.form.resetFields();
+
     }
   }
 };

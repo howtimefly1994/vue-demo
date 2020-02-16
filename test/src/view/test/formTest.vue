@@ -18,20 +18,28 @@
         </el-form>
       </el-col>
       <el-col :span="2">
-        <el-button type="danger" @click="showDialog('Info','add')">新增</el-button>
+        <el-button type="danger" @click="showDialog('add','add')">新增</el-button>
       </el-col>
     </div>
     <div class="tableBox">
       <el-table :data="tableData" style="width: 100%" border stripe>
         <!-- <el-table-column prop="date" label="人员ID" width="180" :formatter="formatDate"></el-table-column> -->
-        <el-table-column prop="userId" label="人员ID" width="180"></el-table-column>
-        <el-table-column prop="cname" label="姓名" width="180"></el-table-column>
-        <el-table-column prop="cpassword" label="密码"></el-table-column>
+        <el-table-column prop="bugId" label="禅道ID" width="80"></el-table-column>
+        <el-table-column prop="creator" label="创建者" width="80"></el-table-column>
+        <el-table-column prop="creatTime" label="创建时间" width="180" :formatter="formatDate"></el-table-column>
+        <el-table-column prop="priority" label="优先级"></el-table-column>
+        <el-table-column prop="project" label="所属项目"></el-table-column>
+        <el-table-column prop="describe" label="描述" :show-overflow-tooltip="true"></el-table-column>
+        <el-table-column prop="assign" label="指派给"></el-table-column>
         <el-table-column fixed="right" label="操作" width="230">
           <template slot-scope="scope">
             <!-- <el-button size="mini" type="warning" @click="handleEdit(scope.$index, scope.row)">编辑</el-button> -->
-            <el-button size="mini" type="primary" @click="showDialog('Info','Info')">编辑</el-button>
-            <el-button size="mini" type="success" @click="showDialog('detail','detail')">详情</el-button>
+            <el-button size="mini" type="primary" @click="showDialog('Info','Info',scope.row)">编辑</el-button>
+            <el-button
+              size="mini"
+              type="success"
+              @click="showDialog('detail','detail',scope.row)"
+            >详情</el-button>
             <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
           </template>
         </el-table-column>
@@ -49,9 +57,11 @@
     </div>
 
     <component
+      v-if="isShow"
       v-bind:is="dialogComponent"
       :isShow="isShow"
       @sureDialogFather="getSonSure"
+      :row="row"
       :type="dialogType"
     ></component>
     <!-- <Info :isShow="isShow" @sureDialogFather="getSonSure"></Info> -->
@@ -60,6 +70,7 @@
 <script>
 import Info from "../test/component/Info";
 import detail from "../test/component/detail";
+import add from "../test/component/add";
 import tableMixins from "@/mixins/table-mixins/";
 export default {
   mixins: [tableMixins],
@@ -70,20 +81,20 @@ export default {
       currentPage1: 1, //当前页
       tableData: [], //表格数据,
       pagesize: 10, //每页数据
+      row: "", //当前行
       isShow: false,
       dialogVisible: false,
       form: {
-        name: "",
-        region: "",
-        date1: "",
-        date2: "",
-        delivery: false,
-        type: [],
-        resource: "",
-        desc: ""
+        bugId: "",
+        userId: "",
+        createTime: "",
+        priority: "",
+        project: "",
+        descripe: "",
+        assign: ""
       },
       formLabelWidth: "120px",
-      
+
       searchForm: {
         name: "1",
         age: "22",
@@ -102,7 +113,8 @@ export default {
   },
   components: {
     Info,
-    detail
+    detail,
+    add
   },
   methods: {
     resetForm(formName) {
@@ -112,14 +124,14 @@ export default {
       console.log(index, row);
       console.log(index);
     },
-    handleDelete(index, row) {
-      console.log(index, row.date);
-      // this.$elemeneuiMessage('请填写数字！','warning')
+    // handleDelete(index, row) {
+    //   console.log(index, row.date);
+    //   // this.$elemeneuiMessage('请填写数字！','warning')
 
-      this.$http.user.getUser().then(res => {
-        console.log(res);
-      });
-    },
+    //   this.$http.user.getUser().then(res => {
+    //     console.log(res);
+    //   });
+    // },
     handleSizeChange(val) {
       this.pagesize = val;
     },
@@ -127,33 +139,13 @@ export default {
       this.currentPage1 = val;
       console.log(`当前页: ${val}`);
     },
-    //判断打开哪个弹窗
-    showDialog(component, type) {
-      // this.dialogFormVisible = true;
-      //  this.dialogComponent = "info";
-      if (type == "Info") {
-        this.dialogType = "编辑";
-      } else if (type == "detail") {
-        this.dialogType = "详情";
-      } else if (type == "add") {
-        this.dialogType = "新增";
-      }
-      this.dialogComponent = component || "Info";
-      this.isShow = true;
-      // console.log(this.isShow);
-    },
-    // 确认关闭弹窗，接受子组件传来的方法，后期可用来接受子组件传来的弹窗表单值
-    getSonSure(val) {
-      this.isShow = false;
-      // console.log(val);
-    },
+
     getTable() {
       let params = {
         currentPage: this.currentPage1,
         pageSize: this.pagesize
       };
-      // console.log("this,", this);
-      this.$http.user.getUser(params).then(res => {
+      this.$http.user.findAllConfirmByPage(params).then(res => {
         // console.log("table", res.data.result);
         this.tableData = res.data.result;
       });
@@ -186,7 +178,7 @@ export default {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
 }
 /* 控制表头和内容行高*/
- .el-table__header tr,
+.el-table__header tr,
 .el-table__header th {
   padding: 0;
   height: 50px;

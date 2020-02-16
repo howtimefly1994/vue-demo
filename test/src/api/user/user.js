@@ -45,5 +45,16 @@ const user = {
     updateTreeByUnid(params){
         return axios.post('markdown/updateTreeByUnid',qs.stringify(params))
     },
+    //confirm
+    findAllConfirmByPage(params){
+        return axios.get('/bugConfirm/findAllConfirmByPage')
+    },
+    addFirm(params){
+        return axios.post('bugConfirm/addConfirm',qs.stringify(params))
+    },
+    detailByBugId(params){
+        return axios.get('bugConfirm/detailByBugId?bugId='+params.bugId)
+    }
+
 }
 export default user

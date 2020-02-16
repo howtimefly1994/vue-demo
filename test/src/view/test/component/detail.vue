@@ -66,3 +66,6 @@ export default {
   }
 };
 </script>
+<style lang="">
+  @import "../../../assets/css/dialog-css.css";
+</style>

@@ -25,7 +25,7 @@
       </el-submenu>
       <el-menu-item index="/pet">
         <i class="el-icon-menu"></i>
-        <span slot="title">这个管理</span>
+        <span slot="title">小程序人员管理</span>
       </el-menu-item>
       <el-menu-item index="/markdown">
         <i class="el-icon-s-order"></i>
