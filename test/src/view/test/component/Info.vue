@@ -91,9 +91,13 @@ export default {
       if (val == "sure") {
         this.$refs[form].validate(valid => {
           if (valid) {
-            this.addFirm(); //更新数据
+            this.updateInfoForm(); //更新数据
 
             this.$emit("sureDialogFather"); //传给父组件，告知弹窗关闭
+            this.$message({
+              type: "success",
+              message: "编辑成功"
+            });
           } else {
             console.log("error submit!!");
             return false;
@@ -103,25 +107,7 @@ export default {
         this.$emit("sureDialogFather"); //如果是取消按钮，直接关闭弹窗
       }
     },
-    //调用新增接口
-    addFirm() {
-      this.form.creatTime = new Date().getTime() / 1000;
-      let params = this.form;
-      console.log("params", params);
-      this.$http.user.addFirm(params).then(res => {
-        if (res.data.code == -1) {
-          this.$message({
-            type: "warning",
-            message: "新增失败"
-          });
-        } else {
-          this.$message({
-            type: "success",
-            message: "新增成功"
-          });
-        }
-      });
-    },
+    
     //清除表单数据
     clearData() {
       this.$refs.form.resetFields();
@@ -132,6 +118,13 @@ export default {
       };
       this.$http.user.detailByBugId(params).then(res => {
         this.form = res.data.result[0];
+      });
+    },
+    updateInfoForm() {
+      let params = this.form;
+      //console.log('params',params);
+      this.$http.user.updateByBugId(params).then(res => {
+        console.log(res.data);
       });
     }
   }

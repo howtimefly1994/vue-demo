@@ -2,18 +2,31 @@
   <div>
     <div class="searchBox">
       <el-col :span="22">
-        <el-form ref="form" :model="searchForm" :inline="true">
-          <el-form-item label="活动名称">
-            <el-input v-model="searchForm.name"></el-input>
+        <el-form ref="searchBox" :model="searchForm" :inline="true">
+          <el-form-item label="创建者">
+            <el-input v-model="searchForm.creator"></el-input>
           </el-form-item>
-          <el-form-item label="活动">
-            <el-input v-model="searchForm.age"></el-input>
+          <el-form-item label="指派给">
+            <el-input v-model="searchForm.assign"></el-input>
           </el-form-item>
-          <el-form-item label="活动123">
-            <el-input v-model="searchForm.age2"></el-input>
+
+          <el-form-item label="创建时间">
+            <el-date-picker
+              v-model="searchForm.creatTime"
+              type="daterange"
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              value-format="timestamp"
+            ></el-date-picker>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" icon="el-icon-search" style="vertical-align:middle">搜索</el-button>
+            <el-button
+              type="primary"
+              icon="el-icon-search"
+              style="vertical-align:middle"
+              @click="getTable()"
+            >搜索</el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -35,12 +48,8 @@
           <template slot-scope="scope">
             <!-- <el-button size="mini" type="warning" @click="handleEdit(scope.$index, scope.row)">编辑</el-button> -->
             <el-button size="mini" type="primary" @click="showDialog('Info','Info',scope.row)">编辑</el-button>
-            <el-button
-              size="mini"
-              type="success"
-              @click="showDialog('detail','detail',scope.row)"
-            >详情</el-button>
-            <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+            <el-button size="mini" type="success" @click="openDrawer(scope.row)">详情</el-button>
+            <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -52,9 +61,13 @@
         :current-page.sync="currentPage1"
         :page-size="pagesize"
         layout="total, prev, pager, next"
-        :total="tableData.length"
+       :total="totalList"
       ></el-pagination>
     </div>
+
+    <el-drawer :title="drawerTitle" :visible.sync="drawer" :direction="direction">
+      <span>{{drawerDetail}}</span>
+    </el-drawer>
 
     <component
       v-if="isShow"
@@ -80,27 +93,39 @@ export default {
       dialogType: "", //弹窗类型
       currentPage1: 1, //当前页
       tableData: [], //表格数据,
+      totalList:10,
       pagesize: 10, //每页数据
       row: "", //当前行
+
+      // 控制详情抽屉
+      drawer: false,
+      direction: "rtl",
+      drawerDetail: "",
+      drawerTitle: "",
+
       isShow: false,
       dialogVisible: false,
+      //列表
       form: {
         bugId: "",
         userId: "",
-        createTime: "",
+        creatTime: "",
         priority: "",
         project: "",
-        descripe: "",
+        describe: "",
         assign: ""
       },
       formLabelWidth: "120px",
-
+      //筛选区
       searchForm: {
-        name: "1",
-        age: "22",
-        age2: ""
+        creator: "",
+        assign: "",
+        creatTime: ""
       },
-      rules: {
+      startTime: "",
+      endTime: "",
+
+      searchBox: {
         name: [
           { required: true, message: "请输入活动名称", trigger: "blur" },
           { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" }
@@ -124,36 +149,109 @@ export default {
       console.log(index, row);
       console.log(index);
     },
-    // handleDelete(index, row) {
-    //   console.log(index, row.date);
-    //   // this.$elemeneuiMessage('请填写数字！','warning')
+    // 删除
+    handleDelete(row) {
+      this.delectTableRow(row);
+    },
 
-    //   this.$http.user.getUser().then(res => {
-    //     console.log(res);
-    //   });
-    // },
-    handleSizeChange(val) {
+     handleSizeChange(val) {
       this.pagesize = val;
     },
     handleCurrentChange(val) {
       this.currentPage1 = val;
+      this.getTable();
       console.log(`当前页: ${val}`);
     },
-
+    //详情抽屉
+    openDrawer(row) {
+      this.drawer = true;
+      let params = {
+        bugId: row.bugId
+      };
+      this.$http.user.detailByBugId(params).then(res => {
+        console.log(res.data);
+        this.drawerDetail = res.data.result[0].describe;
+        this.drawerTitle = res.data.result[0].project;
+      });
+    },
+    //获取列表数据
     getTable() {
       let params = {
         currentPage: this.currentPage1,
-        pageSize: this.pagesize
+        pageSize: this.pagesize,
+        creator: this.searchForm.creator,
+        assign: this.searchForm.assign
       };
+
+      this.changeSearchFormTime();
+      params.startTime = this.startTime;
+      params.endTime = this.endTime
+      console.log("22",typeof( params.startTime));
       this.$http.user.findAllConfirmByPage(params).then(res => {
         // console.log("table", res.data.result);
+        this.totalList = res.data.totalList[0].totalList;
         this.tableData = res.data.result;
+
       });
+    },
+    // 删除行
+    delectTableRow(val) {
+      console.log(val);
+      let params = {
+        bugId: val.bugId
+      };
+      this.$confirm("是否确定删除?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          this.$http.user.deleteByBugId(params).then(res => {
+            if (res.data.code == 1) {
+              this.$message({
+                message: res.data.msg,
+                type: "success"
+              });
+              this.getTable();
+            } else {
+              this.$message({
+                message: res.data.msg,
+                type: "error"
+              });
+            }
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
+    },
+    //处理时间选择器null和undefined
+    changeSearchFormTime() {
+      if (
+        this.searchForm.creatTime != null &&
+        this.searchForm.creatTime != undefined &&
+        this.searchForm.creatTime.length > 0 
+  
+      ) {
+        this.startTime = this.searchForm.creatTime[0] / 1000;
+        this.endTime = this.searchForm.creatTime[1] / 1000;
+       
+      } else {
+        this.startTime = "";
+        this.endTime = "";
+      }
+      console.log("11",isNaN(this.startTime));
     }
   }
 };
 </script>
-<style lang="">
+<style lang="" >
+.el-date-editor {
+  width: 250px !important;
+}
 .searchBox {
   height: 62px;
   width: 100%;
@@ -189,6 +287,12 @@ export default {
 .el-table__body td {
   padding: 0;
   height: 40px;
+}
+/* 控制抽屉 */
+.el-drawer__body {
+  padding: 10px;
+  text-indent: 20px;
+  letter-spacing: 2px;
 }
 </style>
 

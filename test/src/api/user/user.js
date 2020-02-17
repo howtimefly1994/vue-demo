@@ -47,14 +47,19 @@ const user = {
     },
     //confirm
     findAllConfirmByPage(params){
-        return axios.get('/bugConfirm/findAllConfirmByPage')
+        return axios.get('/bugConfirm/findAllConfirmByPage?creator='+ params.creator + '&&assign=' + params.assign+'&&startTime=' + params.startTime+ '&&endTime=' + params.endTime+'&&currentPage='+params.currentPage+"&&pageSize="+params.pageSize)
     },
     addFirm(params){
         return axios.post('bugConfirm/addConfirm',qs.stringify(params))
     },
     detailByBugId(params){
         return axios.get('bugConfirm/detailByBugId?bugId='+params.bugId)
-    }
-
+    },
+    updateByBugId(params){
+        return axios.post('bugConfirm/updateByBugId',qs.stringify(params))
+    },
+    deleteByBugId(params){
+        return axios.post('bugConfirm/deleteByBugId',qs.stringify(params))
+    },
 }
 export default user
