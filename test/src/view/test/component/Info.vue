@@ -17,9 +17,13 @@
               <el-input v-model="form.project" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="指派给" :label-width="formLabelWidth" prop="assign">
-              <el-select v-model="form.assign" placeholder="请选择活动区域">
-                <el-option label="区域一" value="shanghai"></el-option>
-                <el-option label="区域二" value="beijing"></el-option>
+              <el-select v-model="form.assign" placeholder="请选择">
+                <el-option
+                  v-for="item in selectOptions"
+                  :key="item.pid"
+                  :label="item.pname"
+                  :value="item.pname"
+                ></el-option>
               </el-select>
             </el-form-item>
           </el-col>
@@ -78,11 +82,13 @@ export default {
           { required: true, message: "不能为空", trigger: "blur" },
           { min: 1, max: 10, message: "长度在 1 到 10 个字符", trigger: "blur" }
         ]
-      }
+      },
+      selectOptions: []
     };
   },
   mounted() {
     this.getInfoForm();
+    this.getSelectData();
   },
   methods: {
     //新增按钮和取消按钮，点击提交表单
@@ -107,7 +113,7 @@ export default {
         this.$emit("sureDialogFather"); //如果是取消按钮，直接关闭弹窗
       }
     },
-    
+
     //清除表单数据
     clearData() {
       this.$refs.form.resetFields();
@@ -124,7 +130,12 @@ export default {
       let params = this.form;
       //console.log('params',params);
       this.$http.user.updateByBugId(params).then(res => {
-        console.log(res.data);
+        // console.log(res.data);
+      });
+    },
+    getSelectData() {
+      this.$http.user.getAllPet().then(res => {
+        this.selectOptions = res.data.result;
       });
     }
   }

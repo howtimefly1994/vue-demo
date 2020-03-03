@@ -1,31 +1,24 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import login from '@/components/login'
-import container from '@/view/container'
-import index from "@/view/index/index.vue"
-import formTest from '@/view/test/formTest'
-import thetest from '@/view/thetest'
-import css_test from '@/components/css_test'
-import pet from '@/view/pet/pet.vue'
-import markdown from '@/view/markdown/index.vue'
 import ElementUI from 'element-ui';
 Vue.use(Router)
 const VueRouterPush = Router.prototype.push
 Router.prototype.push = function push(to) {
   return VueRouterPush.call(this, to).catch(err => err)
 }
+
 const vueRouter = new Router({
   // mode:'history',
   routes: [
     {
       path: '/',
       name: 'login',
-      component: login
+      component: () => import("@/components/login")
     },
     {
       path: '/main',
       name: 'container',
-      component: container,
+      component: () => import("@/view/container"),
       meta: {
         requrieAuth: true
       },
@@ -33,16 +26,16 @@ const vueRouter = new Router({
         {
           path: '/form',
           name: 'formTest',
-          component: formTest,
+          component: () => import("@/view/test/formTest"),
           meta: {
             requrieAuth: true,
-            title: '人员管理'
+            title: '需求管理'
           }
         },
         {
           path: '/thetest',
           name: 'thetest',
-          component: thetest,
+          component: () => import("@/view/thetest"),
           meta: {
             requrieAuth: true,
             title: '测试'
@@ -51,16 +44,16 @@ const vueRouter = new Router({
         {
           path: '/pet',
           name: 'pet',
-          component: pet,
+          component: () => import("@/view/pet/pet.vue"),
           meta: {
             requrieAuth: true,
-            title: '宠物管理'
+            title: '指派人员管理'
           }
         },
         {
           path: '/index',
           name: 'index',
-          component: index,
+          component: () => import("@/view/index/index.vue"),
           meta: {
             requrieAuth: true,
             title: '首页'
@@ -70,35 +63,21 @@ const vueRouter = new Router({
         {
           path: '/markdown',
           name: 'markdown',
-          component: markdown,
+          component: () => import("@/view/markdown/index.vue"),
           meta: {
             requrieAuth: true,
             title: 'markdown'
           },
-          
+
 
         },
       ]
-    },
-    // {
-    //   path: '/form',
-    //   name: 'formTest',
-    //   component: formTest,
-    //   meta: {
-    //     requrieAuth: true
-    //   }
-    // },
-    {
-      path: '/css',
-      name: 'css_test',
-      component: css_test
     },
 
   ]
 })
 vueRouter.beforeEach((to, from, next) => {
   var token = localStorage.getItem('Authorization');
-  // console.log('to :', to);
 
   if (to.meta.requrieAuth == true) {
     if (token) {
@@ -116,11 +95,6 @@ vueRouter.beforeEach((to, from, next) => {
   } else {
     next()
   }
-
-
-
-
-
 })
 
 export default vueRouter;

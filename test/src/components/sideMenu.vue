@@ -1,31 +1,30 @@
 <template>
   <div>
     <el-menu
-      :default-active="activePath"
+     
+      :default-active="$route.path"
       class="el-menu-vertical-demo"
-      @open="handleOpen"
-      @close="handleClose"
       background-color="#001529"
       text-color="rgba(255,255,255,0.7)"
       active-text-color="#fff"
-      :collapse=$store.state.collapse
+      :collapse="$store.state.collapse"
       router
     >
-     <el-menu-item index="/index">
+      <el-menu-item index="/index">
         <i class="el-icon-document"></i>
         <span slot="title">首页</span>
       </el-menu-item>
       <el-submenu index="1">
         <template slot="title">
           <i class="el-icon-s-custom"></i>
-          <span>人员管理</span>
+          <span>需求管理</span>
         </template>
-        <el-menu-item index="/form">选项1</el-menu-item>
-        <el-menu-item index="/thetest">选项2</el-menu-item>
+        <el-menu-item index="/form">需求管理</el-menu-item>
+        <el-menu-item index="/thetest">需求等级管理</el-menu-item>
       </el-submenu>
       <el-menu-item index="/pet">
         <i class="el-icon-menu"></i>
-        <span slot="title">小程序人员管理</span>
+        <span slot="title">指派人员管理</span>
       </el-menu-item>
       <el-menu-item index="/markdown">
         <i class="el-icon-s-order"></i>
@@ -39,33 +38,33 @@ export default {
   name: "sideMenu",
   data() {
     return {
-       activePath:'/index'
+      activePath: "/index"
     };
   },
   created() {
-   this.getHref();
+      this.getHref();
+  },
+  computed: {
+    activePathcom: function() {
+      let nowHref = window.location.href;
+      let url = nowHref.split("#")[1];
+      this.activePath = url;
+      return window.location.href.split("#")[1];
+    }
   },
   methods: {
     // 解决页面刷新后菜单无法高亮
-    getHref(){
-      let nowHref=window.location.href;
-      let url=nowHref.split('#')[1];
-      this.activePath=url;
-      console.log( this.activePath);
+    getHref() {
+      let nowHref = window.location.href;
+      let url = nowHref.split("#")[1];
+      this.activePath = url;
+      // console.log( this.activePath);
     },
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath);
-    },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
-    }
+ 
   }
 };
 </script>
 <style lang="" scoped>
-/* .el-menu {
-  width: 100%;
-} */
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;
   min-height: 400px;
@@ -73,9 +72,7 @@ export default {
 .el-menu {
   border-right-width: 0px;
 }
-.is-active{
-  background-color: #2D8CF0 !important;
+.is-active {
+  background-color: #2d8cf0 !important;
 }
-
-
 </style>

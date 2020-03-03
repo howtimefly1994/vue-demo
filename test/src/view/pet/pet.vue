@@ -131,7 +131,7 @@ export default {
     handleCurrentChange(val) {
       this.currentPage1 = val;
       this.getTable();
-      console.log(`当前页: ${val}`);
+      // console.log(`当前页: ${val}`);
     },
     handleDelete(row) {
       //删除

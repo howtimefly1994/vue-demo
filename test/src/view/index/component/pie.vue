@@ -5,9 +5,6 @@
         <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
         <div id="main1" style="float:left;width:100%;height: 300px"></div>
       </div>
-      <!-- <div id="pie2">
-        <div id="main2" style="float:left;width:100%;height: 300px"></div>
-      </div>-->
     </div>
   </div>
 </template>
@@ -26,7 +23,9 @@ export default {
   data() {
     return {};
   },
-  created() {},
+  created() {
+   
+  },
   mounted() {
     this.initData();
   },
@@ -38,10 +37,10 @@ export default {
       // 绘制图表
       myChart.setOption({
         title: {
-          text: "某站点用户访问来源",
+          text: "指派人员男女比例",
           left: "center",
           textStyle: {//主标题的属性
-          color: '#4169E1',//颜色
+          color: '#304156',//颜色
           fontSize: 20,//大小
           fontWeight: '700',//粗细
           fontFamily: 'monospace',//字体
@@ -70,11 +69,9 @@ export default {
             radius: "55%",
             center: ["50%", "50%"],
             data: [
-              { value: 335, name: "女" ,itemStyle:{color:"red"}},
-              { value: 310, name: "男" ,itemStyle:{color:"blue"}},
-              // { value: 234, name: "联盟广告" },
-              // { value: 135, name: "视频广告" },
-              // { value: 1548, name: "搜索引擎" }
+              { value: 335, name: "女" ,itemStyle:{color:"#ea6363"}},
+              { value: 310, name: "男" ,itemStyle:{color:"#3398db"}},
+              
             ],
             emphasis: {
               itemStyle: {

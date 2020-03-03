@@ -11,6 +11,9 @@ const user = {
         return axios.get('captcha')
     },
     // 宠物
+    getAllPet(params){
+        return axios.get('pet/findAllpetByPage')
+    },
     getPet(params){
         return axios.get('pet/findPetByPage'+"?currentPage="+params.currentPage+"&&pageSize="+params.pageSize+"&&pid="+params.pid+"&&pname="+params.pname+"&&sex="+params.sex);
     },
@@ -60,6 +63,10 @@ const user = {
     },
     deleteByBugId(params){
         return axios.post('bugConfirm/deleteByBugId',qs.stringify(params))
+    },
+    //首页
+    findDrillData(params){
+        return axios.get('indexData/findDrillData')
     },
 }
 export default user

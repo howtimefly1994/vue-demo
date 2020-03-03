@@ -244,19 +244,19 @@ export default {
       this.countMarkdown = value.length;
     }
   },
-  beforeRouteLeave(to, from, next) {
-    this.$confirm("已经保存了吗?没保存点击'取消',已保存点'确定'", "提示", {
-      confirmButtonText: "确定",
-      cancelButtonText: "取消",
-      type: "warning"
-    })
-      .then(() => {
-        next();
-      })
-      .catch(() => {
-        next(false)
-      });
-  }
+  // beforeRouteLeave(to, from, next) {
+  //   this.$confirm("已经保存了吗?没保存点击'取消',已保存点'确定'", "提示", {
+  //     confirmButtonText: "确定",
+  //     cancelButtonText: "取消",
+  //     type: "warning"
+  //   })
+  //     .then(() => {
+  //       next();
+  //     })
+  //     .catch(() => {
+  //       next(false)
+  //     });
+  // }
 };
 </script>
 <style lang="">

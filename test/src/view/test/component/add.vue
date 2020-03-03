@@ -17,9 +17,13 @@
               <el-input v-model="form.project" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="指派给" :label-width="formLabelWidth" prop="assign">
-              <el-select v-model="form.assign" placeholder="请选择活动区域">
-                <el-option label="区域一" value="shanghai"></el-option>
-                <el-option label="区域二" value="beijing"></el-option>
+              <el-select v-model="form.assign" placeholder="请选择">
+                 <el-option
+                  v-for="item in selectOptions"
+                  :key="item.pid"
+                  :label="item.pname"
+                  :value="item.pname"
+                ></el-option>
               </el-select>
             </el-form-item>
           </el-col>
@@ -32,6 +36,7 @@
                 <el-radio label="高级"></el-radio>
                 <el-radio label="中级"></el-radio>
                 <el-radio label="低级"></el-radio>
+
                 <el-radio label="最低级"></el-radio>
               </el-radio-group>
             </el-form-item>
@@ -78,10 +83,13 @@ export default {
           { required: true, message: "不能为空", trigger: "blur" },
           { min: 1, max: 10, message: "长度在 1 到 10 个字符", trigger: "blur" }
         ]
-      }
+      },
+      selectOptions:[]
     };
   },
-
+  mounted(){
+    this.getSelectData();
+  },
   methods: {
     //新增按钮和取消按钮，点击提交表单
     closeDialog(val, form) {
@@ -105,7 +113,7 @@ export default {
     addFirm() {
       this.form.creatTime = new Date().getTime() / 1000;
       let params = this.form;
-      console.log("params", params);
+      // console.log("params", params);
       this.$http.user.addFirm(params).then(res => {
         if (res.data.code == -1) {
           this.$message({
@@ -122,9 +130,12 @@ export default {
     },
     //清除表单数据
     clearData() {
-
-    this.$refs.form.resetFields();
-
+      this.$refs.form.resetFields();
+    },
+    getSelectData() {
+      this.$http.user.getAllPet().then(res => {
+        this.selectOptions = res.data.result;
+      });
     }
   }
 };

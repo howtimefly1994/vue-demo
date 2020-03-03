@@ -3,20 +3,26 @@
     <div class="statisbox">
       <div class="statis-item">
         <div class="statis-card">
-          <span>123</span>
-          <div class="card-footer">文章总数</div>
+          <span>
+            <router-link :to="{path:'/form'}" style=" text-decoration: none;color:black;font-size:24px;">{{confirmNum}}</router-link>
+          </span>
+          <div class="card-footer">需求确认总数</div>
         </div>
       </div>
       <div class="statis-item">
         <div class="statis-card">
-            <span>456</span>
-          <div class="card-footer">模块一总数</div>
+            <span>
+              <router-link :to="{path:'/form'}" style=" text-decoration: none;color:black;font-size:24px;">{{personNum}}</router-link>
+            </span>
+          <div class="card-footer">指派人总数</div>
         </div>
       </div>
       <div class="statis-item">
         <div class="statis-card">
-            <span>789</span>
-          <div class="card-footer">模块二总数</div>
+            <span>
+              <router-link :to="{path:'/markdown'}" style=" text-decoration: none;color:black;font-size:24px;">{{markdownNum}}</router-link>
+            </span>
+          <div class="card-footer">markdown笔记总数</div>
         </div>
       </div>
     </div>
@@ -53,9 +59,24 @@ export default {
     line1
   },
   data() {
-    return {};
+    return {
+      confirmNum:'',//需求
+      personNum:'',//指派人员
+      markdownNum:''//markdown
+    };
   },
-  methods: {}
+  created () {
+    this.findDrillData()
+  },
+  methods: {
+    findDrillData(){
+      this.$http.user.findDrillData().then(res => {
+       this.confirmNum=res.data.result[2].Num;
+       this.personNum=res.data.result[0].Num;
+       this.markdownNum=res.data.result[1].Num;;
+      })
+    }
+  }
 };
 </script>
 <style lang="">
@@ -93,9 +114,9 @@ export default {
   bottom: 0;
   left: 0;
   height: 30px;
-  background-color: #ccc;
+  background-color: #304156;
   font-size: 15px;
-  color: black;
+  color: white;
   line-height: 30px;
   opacity: 1;
   width: 100%;

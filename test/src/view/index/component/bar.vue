@@ -35,11 +35,11 @@ export default {
       // 绘制图表
       myChart.setOption({
         title: {
-          text: "某站点用户访问来源",
+          text: "需求创建时间统计",
           left: "center",
           textStyle: {
             //主标题的属性
-            color: "#4169E1", //颜色
+            color: "#304156", //颜色
             fontSize: 20, //大小
             fontWeight: "700", //粗细
             fontFamily: "monospace", //字体

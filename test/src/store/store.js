@@ -12,7 +12,7 @@ export const store = new Vuex.Store({
     },
     setToken(state, token) {
       state.token = token;
-      console.log(state.token);
+      // console.log(state.token);
       localStorage.setItem('Authorization', token)
     }
   }
