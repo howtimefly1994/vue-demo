@@ -243,7 +243,7 @@ export default {
         this.startTime = "";
         this.endTime = "";
       }
-      console.log("11",isNaN(this.startTime));
+      // console.log("11",isNaN(this.startTime));
     }
   }
 };
@@ -290,6 +290,7 @@ export default {
 }
 /* 控制抽屉 */
 .el-drawer__body {
+  overflow-wrap:break-word;
   padding: 10px;
   text-indent: 20px;
   letter-spacing: 2px;

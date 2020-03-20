@@ -8,7 +8,7 @@
               <i class="el-icon-circle-plus-outline" @click="addTree" />
             </el-tooltip>
             <el-tooltip effect="dark" content="编辑" placement="top" v-if="!isFirstLevel">
-              <i class="el-icon-edit"  @click="editTree" />
+              <i class="el-icon-edit" @click="editTree" />
             </el-tooltip>
             <el-tooltip effect="dark" content="删除" placement="top" v-if="!isFirstLevel">
               <i class="el-icon-delete" @click="deleteTree" />
@@ -20,12 +20,13 @@
               :props="defaultProps"
               node-key="unid"
               default-expand-all
+              highlight-current
               @node-click="handleNodeClick"
             ></el-tree>
           </div>
         </div>
       </el-col>
-      <el-col :span="19">
+      <el-col :span="19" v-if="isFirstLevel == false">
         <div class="markdownBox">
           <div class="title-item">
             <el-row>
@@ -64,7 +65,7 @@
               v-model="doc"
               :ishljs="true"
               @save="save"
-              :subfield="false"
+              :subfield="true"
               @change="change"
               defaultOpen="preview"
             ></mavon-editor>
@@ -102,7 +103,7 @@ export default {
       dialogType: "", //弹窗类型
       isShow: false,
 
-      isFirstLevel: false, //是否选择父节点
+      isFirstLevel: true, //是否选择父节点
       seletTreeData: {}, // 选中的数据
       seletTreeNode: null, // 选中的节点
       doc: "", //md
@@ -122,6 +123,7 @@ export default {
   },
   created() {
     this.getTable();
+    // console.log(this.isFirstLevel);
   },
   methods: {
     //获取选中节点的信息
@@ -135,14 +137,14 @@ export default {
       this.seletTreeNode = node;
       this.getMarkdown();
       // console.log(data, node);
-         console.log(this.seletTreeData, this.seletTreeNode);
+      console.log(this.seletTreeData, this.seletTreeNode);
     },
     // 新增子节点
     addTree() {
-      this.showDialog("addTree","add");
+      this.showDialog("addTree", "add");
     },
-    editTree(){
-      this.showDialog("editTree",'Info')
+    editTree() {
+      this.showDialog("editTree", "Info");
     },
     //删除子节点
     deleteTree() {
@@ -243,7 +245,7 @@ export default {
       // render 为 markdown 解析后的结果[html]
       this.countMarkdown = value.length;
     }
-  },
+  }
   // beforeRouteLeave(to, from, next) {
   //   this.$confirm("已经保存了吗?没保存点击'取消',已保存点'确定'", "提示", {
   //     confirmButtonText: "确定",
@@ -284,9 +286,9 @@ export default {
   padding-left: 10px;
 }
 .el-tree-node__label {
-  font-size: 18px;
+  font-size: 18px !important;
 }
 .el-tree-node__content {
-  height: 45px;
+  height: 45px !important;
 }
 </style>

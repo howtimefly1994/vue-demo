@@ -24,7 +24,7 @@ const vueRouter = new Router({
       },
       children: [
         {
-          path: '/form',
+          path: '/confirm',
           name: 'formTest',
           component: () => import("@/view/test/formTest"),
           meta: {
@@ -33,12 +33,12 @@ const vueRouter = new Router({
           }
         },
         {
-          path: '/thetest',
-          name: 'thetest',
-          component: () => import("@/view/thetest"),
+          path: '/confirmGrade',
+          name: 'testGrade',
+          component: () => import("@/view/testGrade/index.vue"),
           meta: {
             requrieAuth: true,
-            title: '测试'
+            title: '需求等级'
           }
         },
         {

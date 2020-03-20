@@ -218,10 +218,10 @@ export default {
 /* 控制表头和内容行高*/
 .el-table__header tr,
 .el-table__header th {
-  padding: 0;
+  padding: 0 !important;
   height: 50px;
-  border-right-color: #3c3c3c;
-  background-color: #304156;
+  border-right-color: #3c3c3c !important;
+  background-color: #304156 !important;
 }
 .el-table__body tr,
 .el-table__body td {

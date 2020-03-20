@@ -99,7 +99,7 @@ export default {
   },
   methods: {
     closeDialog(val, infoForm) {
-      console.log(this.infoForm);
+      // console.log(process.env.API);
       if (val == "sure") {
         this.$refs[infoForm].validate(valid => {
           if (valid) {
@@ -126,7 +126,7 @@ export default {
     handleAvatarSuccess(res, file) {
       this.$message.success("success");
       let path = "";
-      path = `http://localhost:3000` + `/img/markdown/${res.imgName}`;
+      path = process.env.API + `/img/markdown/${res.imgName}`;
       this.infoForm.imageUrl = path;
       this.$set(this.infoForm, this.infoForm.imageUrl, path);
     },

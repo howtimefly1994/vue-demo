@@ -79,6 +79,7 @@ export default {
       this.$emit("sureDialogFather");
     },
     getDetForm() {
+      
       let params = {
         pid: this.row.pid
       };

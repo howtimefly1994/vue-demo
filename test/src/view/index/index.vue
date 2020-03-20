@@ -4,7 +4,7 @@
       <div class="statis-item">
         <div class="statis-card">
           <span>
-            <router-link :to="{path:'/form'}" style=" text-decoration: none;color:black;font-size:24px;">{{confirmNum}}</router-link>
+            <router-link :to="{path:'/confirm'}" style=" text-decoration: none;color:#304156;font-size:24px;">{{confirmNum}}</router-link>
           </span>
           <div class="card-footer">需求确认总数</div>
         </div>
@@ -12,7 +12,7 @@
       <div class="statis-item">
         <div class="statis-card">
             <span>
-              <router-link :to="{path:'/form'}" style=" text-decoration: none;color:black;font-size:24px;">{{personNum}}</router-link>
+              <router-link :to="{path:'/pet'}" style=" text-decoration: none;color:#304156;font-size:24px;">{{personNum}}</router-link>
             </span>
           <div class="card-footer">指派人总数</div>
         </div>
@@ -20,7 +20,7 @@
       <div class="statis-item">
         <div class="statis-card">
             <span>
-              <router-link :to="{path:'/markdown'}" style=" text-decoration: none;color:black;font-size:24px;">{{markdownNum}}</router-link>
+              <router-link :to="{path:'/markdown'}" style=" text-decoration: none;color:#304156;font-size:24px;">{{markdownNum}}</router-link>
             </span>
           <div class="card-footer">markdown笔记总数</div>
         </div>

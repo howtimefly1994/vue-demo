@@ -32,12 +32,8 @@
               <el-input v-model="form.creator" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="优先级" :label-width="formLabelWidth">
-              <el-radio-group v-model="form.priority">
-                <el-radio label="高级"></el-radio>
-                <el-radio label="中级"></el-radio>
-                <el-radio label="低级"></el-radio>
-
-                <el-radio label="最低级"></el-radio>
+              <el-radio-group v-model="form.priority" v-for="(item,key) in priorityList" :key="key">
+                <el-radio :label="item.grade"></el-radio>
               </el-radio-group>
             </el-form-item>
           </el-col>
@@ -84,11 +80,13 @@ export default {
           { min: 1, max: 10, message: "长度在 1 到 10 个字符", trigger: "blur" }
         ]
       },
-      selectOptions:[]
+      selectOptions:[],
+      priorityList: [],
     };
   },
   mounted(){
     this.getSelectData();
+    this.getPriorityList();
   },
   methods: {
     //新增按钮和取消按钮，点击提交表单
@@ -118,7 +116,7 @@ export default {
         if (res.data.code == -1) {
           this.$message({
             type: "warning",
-            message: "新增失败"
+            message: "新增失败,id不能重复"
           });
         } else {
           this.$message({
@@ -135,6 +133,11 @@ export default {
     getSelectData() {
       this.$http.user.getAllPet().then(res => {
         this.selectOptions = res.data.result;
+      });
+    },
+    getPriorityList() {
+      this.$http.user.findAllGrade().then(res => {
+        this.priorityList = res.data.result;
       });
     }
   }

@@ -68,5 +68,24 @@ const user = {
     findDrillData(params){
         return axios.get('indexData/findDrillData')
     },
+    //需求等级
+    findAllGradeByPage(params){
+        return axios.get('confirmGrade/findAllGradeByPage?grade='+params.grade+'&&currentPage='+params.currentPage+"&&pageSize="+params.pageSize)
+    },
+    addConfirmGrade(params){
+        return axios.post('confirmGrade/addConfirmGrade',qs.stringify(params))
+    },
+    detailByGradeId(params){
+        return axios.get('confirmGrade/detailByGradeId?id='+params.id)
+    },
+    updateByGradeId(params){
+        return axios.post('confirmGrade/updateByGradeId',qs.stringify(params))
+    },
+    deleteByGradeId(params){
+        return axios.post('confirmGrade/deleteByGradeId',qs.stringify(params))
+    },
+    findAllGrade(params){
+        return axios.get('confirmGrade/findAllGrade')
+    },
 }
 export default user

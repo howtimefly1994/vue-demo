@@ -42,6 +42,7 @@ export default {
             this.dialogComponent = component || "Info";
             this.isShow = true;
             this.row=row;
+        
         },
         // 确认关闭弹窗，接受子组件传来的方法，后期可用来接受子组件传来的弹窗表单值
         getSonSure(val) {

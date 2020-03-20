@@ -19,8 +19,8 @@
           <i class="el-icon-s-custom"></i>
           <span>需求管理</span>
         </template>
-        <el-menu-item index="/form">需求管理</el-menu-item>
-        <el-menu-item index="/thetest">需求等级管理</el-menu-item>
+        <el-menu-item index="/confirm">需求管理</el-menu-item>
+        <el-menu-item index="/confirmGrade">需求等级管理</el-menu-item>
       </el-submenu>
       <el-menu-item index="/pet">
         <i class="el-icon-menu"></i>

@@ -32,11 +32,8 @@
               <el-input v-model="form.creator" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="优先级" :label-width="formLabelWidth">
-              <el-radio-group v-model="form.priority">
-                <el-radio label="高级"></el-radio>
-                <el-radio label="中级"></el-radio>
-                <el-radio label="低级"></el-radio>
-                <el-radio label="最低级"></el-radio>
+              <el-radio-group v-model="form.priority" v-for="(item,key) in priorityList" :key="key">
+                <el-radio :label="item.grade"></el-radio>
               </el-radio-group>
             </el-form-item>
           </el-col>
@@ -68,6 +65,7 @@ export default {
         project: "",
         assign: ""
       },
+      priorityList: [],
       rules: {
         bugId: [
           { required: true, message: "bugId不能为空" },
@@ -89,6 +87,7 @@ export default {
   mounted() {
     this.getInfoForm();
     this.getSelectData();
+    this.getPriorityList();
   },
   methods: {
     //新增按钮和取消按钮，点击提交表单
@@ -137,6 +136,11 @@ export default {
       this.$http.user.getAllPet().then(res => {
         this.selectOptions = res.data.result;
       });
+    },
+    getPriorityList() {
+      this.$http.user.findAllGrade().then(res => {
+        this.priorityList = res.data.result;
+      });
     }
   }
 };
@@ -145,5 +149,11 @@ export default {
 @import "../../../assets/css/dialog-css.css";
 .el-radio {
   margin-top: 15px;
+}
+.el-radio-group {
+  padding-bottom: 10px;
+}
+.el-radio__label {
+  padding: 0 10px 0 5px !important;
 }
 </style>
